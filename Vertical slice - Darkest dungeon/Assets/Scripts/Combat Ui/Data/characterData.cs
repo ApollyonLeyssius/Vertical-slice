@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using TMPro;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 [Serializable]
 public class characterData
@@ -49,7 +47,7 @@ public class characterData
     {
         get
         {
-            return _target.characterState == CharacterState.Idle  || _target.characterState == CharacterState.Ready;
+            return _target.characterState == CharacterState.Idle || _target.characterState == CharacterState.Ready;
         }
     }
 
@@ -88,7 +86,7 @@ public class characterData
 
     public void Attack(abilityData ability)
     {
-        if(characterState == CharacterState.Died)
+        if (characterState == CharacterState.Died)
             return;
 
         switch (ability.outputType)
@@ -100,7 +98,7 @@ public class characterData
                 _target.WasDamaged(ability.abValue);
                 break;
         }
-        
+
         OnAttack?.Invoke();
 
         _target.WasDamaged(ability.abValue);
@@ -109,10 +107,10 @@ public class characterData
 
     public void Heal(int healAmount)
     {
-       CurrentHealth = Math.Clamp(CurrentHealth + healAmount, 0, maxCharacterHealth);
-         if (characterType == CharacterType.Player)
-         {
-              CharUI.UpdateHealth(CurrentHealth);
+        CurrentHealth = Math.Clamp(CurrentHealth + healAmount, 0, maxCharacterHealth);
+        if (characterType == CharacterType.Player)
+        {
+            CharUI.UpdateHealth(CurrentHealth);
         }
     }
 
@@ -146,22 +144,22 @@ public class characterData
         UnityEngine.Debug.Log(CharacterName + " was attacked!");
     }
 
-    public IEnumerator CharacterLoop()
-    {
-        while (characterState != CharacterState.Died)
-        {
-            if (CurrentSpeed >= CharacterSpeed)
-            {
-                CurrentSpeed = CharacterSpeed;
-            }
-            else
-            {
-                CurrentSpeed += Time.deltaTime;
-                characterState = CharacterState.Idle;
-            }
-            yield return null;
-        }
-    }
+    /* public IEnumerator CharacterLoop()
+     {
+         while (characterState != CharacterState.Died)
+         {
+             if (CurrentSpeed >= CharacterSpeed)
+             {
+                 CurrentSpeed = CharacterSpeed;
+             }
+             else
+             {
+                 CurrentSpeed += Time.deltaTime;
+                 characterState = CharacterState.Idle;
+             }
+             yield return null;
+         }
+     }*/
 }
 
 [Serializable]
