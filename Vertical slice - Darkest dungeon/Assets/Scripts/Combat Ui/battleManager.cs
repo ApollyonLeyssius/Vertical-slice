@@ -16,6 +16,7 @@ public class battleManager : MonoBehaviour
     private Queue<characterControl> turnOrder = new Queue<characterControl>();
 
     public characterControl currentCharacter;
+    public List<characterControl> friendlyCharacters = new List<characterControl>();
 
     private void Awake()
     {
@@ -24,6 +25,7 @@ public class battleManager : MonoBehaviour
 
     private void Start()
     {
+        friendlyCharacters = allCharacters.FindAll(x => x.CharacterData.characterType == CharacterType.Player);
         GenerateTurnOrder();
         NextTurn();
     }

@@ -1,6 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Playables;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -43,11 +46,11 @@ public class characterData
 
 
     public bool PlayerJustAttacked;
-    public bool canAttack
+    public bool isAttackable
     {
         get
         {
-            return _target.characterState == CharacterState.Idle || _target.characterState == CharacterState.Ready;
+            return characterState == CharacterState.Idle || characterState == CharacterState.Ready;
         }
     }
 
@@ -82,6 +85,29 @@ public class characterData
         OnWasAttacked.AddListener(CharacterWasAttacked);
 
         characterState = CharacterState.Idle;
+    }
+
+    IEnumerator attackQueue(abilityData ability)
+    {
+        if (characterState == CharacterState.Died)
+            yield break;
+
+        yield return new WaitUntil(() => _target.isAttackable);
+
+        switch (ability.outputType)
+        {
+            case AblilityOutputType.Heal:
+                _target.Heal(ability.abValue);
+                break;
+            case AblilityOutputType.Damage:
+                _target.WasDamaged(ability.abValue);
+                break;
+        }
+
+        OnAttack?.Invoke();
+
+        _target.WasDamaged(ability.abValue);
+        characterState = CharacterState.Attacking;
     }
 
     public void Attack(abilityData ability)
@@ -143,23 +169,6 @@ public class characterData
     {
         UnityEngine.Debug.Log(CharacterName + " was attacked!");
     }
-
-    /* public IEnumerator CharacterLoop()
-     {
-         while (characterState != CharacterState.Died)
-         {
-             if (CurrentSpeed >= CharacterSpeed)
-             {
-                 CurrentSpeed = CharacterSpeed;
-             }
-             else
-             {
-                 CurrentSpeed += Time.deltaTime;
-                 characterState = CharacterState.Idle;
-             }
-             yield return null;
-         }
-     }*/
 }
 
 [Serializable]
@@ -204,6 +213,7 @@ public enum CharacterState
     Ready,
     Attacked,
     Attacking,
-    Died
+    Died,
+    TryingToAttack
 }
 
