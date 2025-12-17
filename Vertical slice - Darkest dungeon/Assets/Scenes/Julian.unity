@@ -884,17 +884,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330739588}
   m_CullTransparentMesh: 1
---- !u!114 &331836909 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2080740479056005297, guid: 246f9251e253ba947b9a728355616826, type: 3}
-  m_PrefabInstance: {fileID: 7180651166146473911}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f3a0f99aa3f5114db855bbac6e8fae9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &355512849
 GameObject:
   m_ObjectHideFlags: 0
@@ -1322,17 +1311,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 462396791}
   m_CullTransparentMesh: 1
---- !u!114 &495796146 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3087749851804725553, guid: ef562ba927a7403429ffb45c3304b55e, type: 3}
-  m_PrefabInstance: {fileID: 7451245703089273652}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f3a0f99aa3f5114db855bbac6e8fae9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &512869359
 GameObject:
   m_ObjectHideFlags: 0
@@ -1381,6 +1359,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1506,6 +1485,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56666c5a40171f54783dd416a44f42bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!1 &564310641
 GameObject:
   m_ObjectHideFlags: 0
@@ -6392,7 +6387,7 @@ PrefabInstance:
     - target: {fileID: 7335330892403262256, guid: 3851cf2c7e609804d9c82e0066762795, type: 3}
       propertyPath: targetData
       value: 
-      objectReference: {fileID: 495796146}
+      objectReference: {fileID: 0}
     - target: {fileID: 7335330892403262256, guid: 3851cf2c7e609804d9c82e0066762795, type: 3}
       propertyPath: CharacterData.CharUI.healthText
       value: 
@@ -6490,7 +6485,7 @@ PrefabInstance:
     - target: {fileID: 810960238307684791, guid: fcd3bd72306876d4c968814e0f2be2c5, type: 3}
       propertyPath: targetData
       value: 
-      objectReference: {fileID: 331836909}
+      objectReference: {fileID: 0}
     - target: {fileID: 810960238307684791, guid: fcd3bd72306876d4c968814e0f2be2c5, type: 3}
       propertyPath: CharacterData.CharUI.healthSlider
       value: 
@@ -6498,6 +6493,10 @@ PrefabInstance:
     - target: {fileID: 3755946948053903019, guid: fcd3bd72306876d4c968814e0f2be2c5, type: 3}
       propertyPath: m_Name
       value: Enemy character 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6334321194267302060, guid: fcd3bd72306876d4c968814e0f2be2c5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 9024423410439708905, guid: fcd3bd72306876d4c968814e0f2be2c5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6555,7 +6554,7 @@ PrefabInstance:
     - target: {fileID: 2080740479056005297, guid: 246f9251e253ba947b9a728355616826, type: 3}
       propertyPath: targetData
       value: 
-      objectReference: {fileID: 495796146}
+      objectReference: {fileID: 0}
     - target: {fileID: 2080740479056005297, guid: 246f9251e253ba947b9a728355616826, type: 3}
       propertyPath: CharacterData.CharUI.healthText
       value: 
@@ -6632,18 +6631,22 @@ PrefabInstance:
     - target: {fileID: 3087749851804725553, guid: ef562ba927a7403429ffb45c3304b55e, type: 3}
       propertyPath: targetData
       value: 
-      objectReference: {fileID: 331836909}
+      objectReference: {fileID: 0}
     - target: {fileID: 3087749851804725553, guid: ef562ba927a7403429ffb45c3304b55e, type: 3}
       propertyPath: CharacterData.CharUI.healthSlider
       value: 
       objectReference: {fileID: 786815328}
+    - target: {fileID: 6962150033824967177, guid: ef562ba927a7403429ffb45c3304b55e, type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8866851821295596942, guid: ef562ba927a7403429ffb45c3304b55e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.14
+      value: 0.34
       objectReference: {fileID: 0}
     - target: {fileID: 8866851821295596942, guid: ef562ba927a7403429ffb45c3304b55e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.61
+      value: 2.64
       objectReference: {fileID: 0}
     - target: {fileID: 8866851821295596942, guid: ef562ba927a7403429ffb45c3304b55e, type: 3}
       propertyPath: m_LocalPosition.z

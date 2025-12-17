@@ -7,6 +7,7 @@ using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 [Serializable]
 public class characterData
@@ -23,10 +24,7 @@ public class characterData
     public CharacterType characterType;
 
     [Space(10)]
-
     public characterData _target;
-
-    [Space(10)]
 
     public characterUIData CharUI;
 
@@ -94,50 +92,33 @@ public class characterData
 
         characterState = CharacterState.Idle;
     }
-
-    IEnumerator attackQueue(abilityData ability)
-    {
-        if (characterState == CharacterState.Died)
-            yield break;
-
-        yield return new WaitUntil(() => _target.isAttackable);
-
-        switch (ability.outputType)
-        {
-            case AblilityOutputType.Heal:
-                _target.Heal(ability.abValue);
-                break;
-            case AblilityOutputType.Damage:
-                _target.WasDamaged(ability.abValue);
-                break;
-        }
-
-        OnAttack?.Invoke();
-
-        _target.WasDamaged(ability.abValue);
-        characterState = CharacterState.Attacking;
-    }
-
     public void Attack(abilityData ability)
     {
         if (characterState == CharacterState.Died)
             return;
 
+        if (_target == null)
+        {
+            Debug.LogError($"{CharacterName} tried to attack but has no target!");
+            return;
+        }
+
+        characterState = CharacterState.Attacking;
+
         switch (ability.outputType)
         {
             case AblilityOutputType.Heal:
                 _target.Heal(ability.abValue);
                 break;
+
             case AblilityOutputType.Damage:
                 _target.WasDamaged(ability.abValue);
                 break;
         }
 
         OnAttack?.Invoke();
-
-        _target.WasDamaged(ability.abValue);
-        characterState = CharacterState.Attacking;
     }
+
 
     public void Heal(int healAmount)
     {

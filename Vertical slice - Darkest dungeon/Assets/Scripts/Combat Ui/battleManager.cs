@@ -70,21 +70,17 @@ public class battleManager : MonoBehaviour
     // UI → knop roept deze functie aan
     public void DoBasicAttackFromButton()
     {
-        var data = currentCharacter.CharacterData;
-
-        if (data.characterState != CharacterState.Ready)
+        // Alleen player mag dit doen
+        if (currentCharacter.CharacterData.characterType != CharacterType.Player)
             return;
 
-        if (data._target.canBeAttacked)
-        {
-            data.Attack(data.basicAttack);
-        }
+        // Zet basic attack als geselecteerde ability
+        selectedAbility = currentCharacter.CharacterData.basicAttack;
 
-        NextTurn();
-    }
+        // Wacht op enemy klik
+        waitingForTarget = true;
 
-    public void EnemyBasicAttack()
-    {
+        Debug.Log("Basic Attack selected, waiting for target...");
     }
 
     public void SelectAbility(int index)
@@ -98,15 +94,22 @@ public class battleManager : MonoBehaviour
 
     public void TargetSelected(characterControl target)
     {
-        if (!waitingForTarget) return;
+        // Alleen doorgaan als we echt targeten
+        if (!waitingForTarget || selectedAbility == null)
+            return;
 
         waitingForTarget = false;
 
-        // Voer ability uit
+        // Zet target
         currentCharacter.CharacterData._target = target.CharacterData;
+
+        // Voer ability uit (basic attack of andere)
         currentCharacter.CharacterData.Attack(selectedAbility);
 
-        // Reset
+        Debug.Log(
+            $"{currentCharacter.CharacterData.CharacterName} gebruikt {selectedAbility.abilityName} op {target.CharacterData.CharacterName}"
+        );
+
         selectedAbility = null;
 
         // Volgende beurt
