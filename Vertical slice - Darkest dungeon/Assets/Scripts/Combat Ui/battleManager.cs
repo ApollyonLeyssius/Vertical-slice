@@ -32,7 +32,6 @@ public class battleManager : MonoBehaviour
 
     public void GenerateTurnOrder()
     {
-        // Sorteer op Speed
         allCharacters.Sort((a, b) =>
             b.CharacterData.CharacterSpeed.CompareTo(a.CharacterData.CharacterSpeed));
 
@@ -69,6 +68,10 @@ public class battleManager : MonoBehaviour
         }
 
         NextTurn();
+    }
+
+    public void EnemyBasicAttack()
+    {
     }
 
     public void SelectAbility(int index)

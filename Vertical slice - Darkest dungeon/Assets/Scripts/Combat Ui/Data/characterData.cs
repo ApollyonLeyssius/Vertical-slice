@@ -71,6 +71,14 @@ public class characterData
         }
     }
 
+    public bool IsAlive
+    {
+        get
+        {
+            return characterState != CharacterState.Died;
+        }
+    }
+
     public void Init()
     {
         if (characterType == CharacterType.Player)

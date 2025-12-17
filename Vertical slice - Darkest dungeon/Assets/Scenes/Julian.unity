@@ -945,7 +945,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     PlayerJustAttacked: 0
-  targetData: {fileID: 0}
+  targetData: {fileID: 495796146}
 --- !u!4 &331836910
 Transform:
   m_ObjectHideFlags: 0
@@ -2732,6 +2732,21 @@ MonoBehaviour:
       type: 0
       outputType: 0
       abilityCost: 10
+    - abilityName: Posion sto
+      abValue: 10
+      type: 0
+      outputType: 0
+      abilityCost: 10
+    - abilityName: Posion sto
+      abValue: 10
+      type: 0
+      outputType: 0
+      abilityCost: 10
+    - abilityName: Posion sto
+      abValue: 10
+      type: 0
+      outputType: 0
+      abilityCost: 10
     basicAttack:
       abilityName: Basic Attack
       abValue: 10
@@ -2746,7 +2761,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     PlayerJustAttacked: 0
-  targetData: {fileID: 0}
+  targetData: {fileID: 495796146}
 --- !u!4 &879262181
 Transform:
   m_ObjectHideFlags: 0
@@ -5479,6 +5494,7 @@ MonoBehaviour:
   waitingForTarget: 0
   allCharacters: []
   currentCharacter: {fileID: 0}
+  friendlyCharacters: []
 --- !u!4 &1597446104
 Transform:
   m_ObjectHideFlags: 0
