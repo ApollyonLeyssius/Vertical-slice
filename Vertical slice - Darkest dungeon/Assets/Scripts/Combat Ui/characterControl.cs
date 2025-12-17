@@ -22,10 +22,10 @@ public class characterControl : MonoBehaviour, IPointerClickHandler
         CharacterData._target = targetData.CharacterData;
 
         battleManager.instance.allCharacters.Add(this);
-        if (CharacterData.characterType == CharacterType.Enemy)
+     /*   if (CharacterData.characterType == CharacterType.Enemy)
         {
             Enemybehaviour = StartCoroutine(AttackRandomFriendly());
-        }
+        }*/
     }
 
     private void attackRandomFriendlyCharacter()

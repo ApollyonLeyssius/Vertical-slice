@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-[System.Serializable]
+using System;
+[Serializable]
 public class abilityData
 {
     public string abilityName = "New Ability";

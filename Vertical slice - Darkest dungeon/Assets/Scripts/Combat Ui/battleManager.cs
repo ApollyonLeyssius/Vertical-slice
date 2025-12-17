@@ -45,12 +45,25 @@ public class battleManager : MonoBehaviour
     {
         currentCharacter = turnOrder.Dequeue();
 
+        if (!currentCharacter.CharacterData.IsAlive)
+        {
+            NextTurn();
+            return;
+        }
+
+        currentCharacter.CharacterData.characterState = CharacterState.Ready;
         Debug.Log("Turn: " + currentCharacter.CharacterData.CharacterName);
 
-        // Zet in actieve beurt
-        currentCharacter.CharacterData.characterState = CharacterState.Ready;
+        if (currentCharacter.CharacterData.characterType == CharacterType.Enemy)
+        {
+            StartCoroutine(EnemyTurn());
+        }
+        else
+        {
+            // Player turn → UI aanzetten
+            waitingForTarget = false;
+        }
 
-        // Zet character terug in de queue voor volgende rondes
         turnOrder.Enqueue(currentCharacter);
     }
 
@@ -97,6 +110,36 @@ public class battleManager : MonoBehaviour
         selectedAbility = null;
 
         // Volgende beurt
+        NextTurn();
+    }
+
+    private IEnumerator EnemyTurn()
+    {
+        // Kleine delay zodat het leesbaar is
+        yield return new WaitForSeconds(0.8f);
+
+        var enemyData = currentCharacter.CharacterData;
+
+        // Kies ability
+        abilityData ability = enemyData.basicAttack;
+
+        // Kies random levende player
+        var targets = allCharacters.FindAll(x =>
+            x.CharacterData.characterType == CharacterType.Player &&
+            x.CharacterData.IsAlive);
+
+        if (targets.Count == 0)
+            yield break;
+
+        var target = targets[Random.Range(0, targets.Count)];
+
+        enemyData._target = target.CharacterData;
+        enemyData.Attack(ability);
+
+        Debug.Log($"{enemyData.CharacterName} gebruikt {ability.abilityName} op {target.CharacterData.CharacterName}");
+
+        yield return new WaitForSeconds(0.5f);
+
         NextTurn();
     }
 
