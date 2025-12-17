@@ -143,6 +143,10 @@ public class characterData
         {
             CharUI.UpdateHealth(CurrentHealth);
         }
+        if (characterType == CharacterType.Enemy)
+            {
+            CharUI.UpdateHealthEnemy(CurrentHealth);
+        }
 
         OnWasAttacked?.Invoke();
 
@@ -187,7 +191,13 @@ public class characterUIData
         healthSlider.value = CurrentHealth;
         healthText.text = CurrentHealth + " /" + healthSlider.maxValue;
     }
+
+    public void UpdateHealthEnemy(int CurrentHealth)
+    {
+        healthSlider.value = CurrentHealth;
+    }
 }
+
 
 public enum CharacterType
 {
