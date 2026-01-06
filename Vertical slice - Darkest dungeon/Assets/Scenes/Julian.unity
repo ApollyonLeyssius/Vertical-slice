@@ -641,6 +641,7 @@ GameObject:
   - component: {fileID: 248337579}
   - component: {fileID: 248337578}
   - component: {fileID: 248337577}
+  - component: {fileID: 248337580}
   m_Layer: 0
   m_Name: Enemy-A_Bone_soldier_defend
   m_TagString: Untagged
@@ -664,6 +665,7 @@ MonoBehaviour:
     CharacterName: Skeleton 1
     maxCharacterHealth: 100
     CurrentHealth: 100
+    position: 0
     CharacterSpeed: 4
     CurrentSpeed: 4
     characterState: 0
@@ -674,11 +676,17 @@ MonoBehaviour:
       characterNameText: {fileID: 0}
     Abilities: []
     basicAttack:
-      abilityName: New Ability
-      abValue: 10
-      type: 0
+      abilityName: 
+      minDamage: 3
+      maxDamage: 7
+      healAmount: 0
       outputType: 0
-      abilityCost: 10
+      usableFromPositions: 
+      validTargetPositions: 
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 5
+      critMultiplier: 1.5
     _charCont: {fileID: 0}
     OnAttack:
       m_PersistentCalls:
@@ -755,6 +763,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &248337580
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248337576}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1.9325709, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 18, y: 18}
+    newSize: {x: 18, y: 18}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10.314136, y: 18}
+  m_EdgeRadius: 0
 --- !u!1 &252757351
 GameObject:
   m_ObjectHideFlags: 0
@@ -2230,6 +2283,7 @@ MonoBehaviour:
     CharacterName: Crusador
     maxCharacterHealth: 100
     CurrentHealth: 100
+    position: 0
     CharacterSpeed: 1
     CurrentSpeed: 1
     characterState: 0
@@ -2240,11 +2294,17 @@ MonoBehaviour:
       characterNameText: {fileID: 0}
     Abilities: []
     basicAttack:
-      abilityName: New Ability
-      abValue: 10
-      type: 0
+      abilityName: 
+      minDamage: 3
+      maxDamage: 7
+      healAmount: 0
       outputType: 0
-      abilityCost: 10
+      usableFromPositions: 
+      validTargetPositions: 00000000010000000200000003000000
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 5
+      critMultiplier: 1.5
     _charCont: {fileID: 0}
     OnAttack:
       m_PersistentCalls:
@@ -5041,6 +5101,7 @@ GameObject:
   - component: {fileID: 1476636045}
   - component: {fileID: 1476636044}
   - component: {fileID: 1476636043}
+  - component: {fileID: 1476636046}
   m_Layer: 0
   m_Name: Enemy-B_Bone_Rabble_attack
   m_TagString: Untagged
@@ -5064,6 +5125,7 @@ MonoBehaviour:
     CharacterName: Skeleton 2
     maxCharacterHealth: 100
     CurrentHealth: 100
+    position: 1
     CharacterSpeed: 6
     CurrentSpeed: 6
     characterState: 0
@@ -5074,11 +5136,17 @@ MonoBehaviour:
       characterNameText: {fileID: 0}
     Abilities: []
     basicAttack:
-      abilityName: New Ability
-      abValue: 10
-      type: 0
+      abilityName: 
+      minDamage: 3
+      maxDamage: 7
+      healAmount: 0
       outputType: 0
-      abilityCost: 10
+      usableFromPositions: 
+      validTargetPositions: 00000000010000000200000003000000
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 5
+      critMultiplier: 1.5
     _charCont: {fileID: 0}
     OnAttack:
       m_PersistentCalls:
@@ -5155,6 +5223,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1476636046
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476636042}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 2.1102767, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 25.01, y: 20.955647}
+    newSize: {x: 25.01, y: 20.955647}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 15.902488, y: 20.955647}
+  m_EdgeRadius: 0
 --- !u!1 &1526389502 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8653719598885068355, guid: 56c21a42e6d1adb44b735dfe650f20e0, type: 3}
@@ -5176,6 +5289,7 @@ MonoBehaviour:
     CharacterName: Highwayman
     maxCharacterHealth: 100
     CurrentHealth: 100
+    position: 0
     CharacterSpeed: 3
     CurrentSpeed: 3
     characterState: 0
@@ -5186,11 +5300,17 @@ MonoBehaviour:
       characterNameText: {fileID: 0}
     Abilities: []
     basicAttack:
-      abilityName: New Ability
-      abValue: 10
-      type: 0
+      abilityName: 
+      minDamage: 3
+      maxDamage: 7
+      healAmount: 0
       outputType: 0
-      abilityCost: 10
+      usableFromPositions: 
+      validTargetPositions: 00000000010000000200000003000000
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 5
+      critMultiplier: 1.5
     _charCont: {fileID: 0}
     OnAttack:
       m_PersistentCalls:
@@ -5477,6 +5597,7 @@ MonoBehaviour:
     CharacterName: Vestal
     maxCharacterHealth: 100
     CurrentHealth: 100
+    position: 0
     CharacterSpeed: 2
     CurrentSpeed: 2
     characterState: 0
@@ -5487,11 +5608,17 @@ MonoBehaviour:
       characterNameText: {fileID: 0}
     Abilities: []
     basicAttack:
-      abilityName: New Ability
-      abValue: 10
-      type: 0
+      abilityName: 
+      minDamage: 3
+      maxDamage: 7
+      healAmount: 0
       outputType: 0
-      abilityCost: 10
+      usableFromPositions: 
+      validTargetPositions: 00000000010000000200000003000000
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 5
+      critMultiplier: 1.5
     _charCont: {fileID: 0}
     OnAttack:
       m_PersistentCalls:
@@ -5679,6 +5806,7 @@ MonoBehaviour:
     CharacterName: Plauge Doctor
     maxCharacterHealth: 100
     CurrentHealth: 100
+    position: 0
     CharacterSpeed: 5
     CurrentSpeed: 5
     characterState: 0
@@ -5689,11 +5817,17 @@ MonoBehaviour:
       characterNameText: {fileID: 1630029790}
     Abilities: []
     basicAttack:
-      abilityName: New Ability
-      abValue: 10
-      type: 0
+      abilityName: 
+      minDamage: 3
+      maxDamage: 7
+      healAmount: 0
       outputType: 0
-      abilityCost: 10
+      usableFromPositions: 
+      validTargetPositions: 00000000010000000200000003000000
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 5
+      critMultiplier: 1.5
     _charCont: {fileID: 0}
     OnAttack:
       m_PersistentCalls:

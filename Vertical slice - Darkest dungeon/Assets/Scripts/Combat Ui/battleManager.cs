@@ -18,6 +18,7 @@ public class battleManager : MonoBehaviour
     public characterControl currentCharacter;
     public List<characterControl> friendlyCharacters = new List<characterControl>();
 
+
     private void Awake()
     {
         instance = this;
@@ -85,34 +86,60 @@ public class battleManager : MonoBehaviour
 
     public void SelectAbility(int index)
     {
-        var data = currentCharacter.CharacterData.Abilities;
-        selectedAbility = data[index];
+        var data = currentCharacter.CharacterData;
+        var ability = data.Abilities[index];
 
+        // Check: mag deze ability vanaf deze positie?
+        if (!ability.usableFromPositions.Contains(data.position))
+        {
+            Debug.Log("Ability cannot be used from this position!");
+            return;
+        }
+
+        selectedAbility = ability;
         waitingForTarget = true;
-        Debug.Log("Selected ability: " + selectedAbility.abilityName);
     }
+
+
+    /* public void TargetSelected(characterControl target)
+     {
+         // Alleen doorgaan als we echt targeten
+         if (!waitingForTarget || selectedAbility == null)
+             return;
+
+         waitingForTarget = false;
+
+         // Zet target
+         currentCharacter.CharacterData._target = target.CharacterData;
+
+         // Voer ability uit (basic attack of andere)
+         currentCharacter.CharacterData.Attack(selectedAbility);
+
+         Debug.Log(
+             $"{currentCharacter.CharacterData.CharacterName} gebruikt {selectedAbility.abilityName} op {target.CharacterData.CharacterName}"
+         );
+
+         selectedAbility = null;
+
+         // Volgende beurt
+         NextTurn();
+     }*/
 
     public void TargetSelected(characterControl target)
     {
-        // Alleen doorgaan als we echt targeten
-        if (!waitingForTarget || selectedAbility == null)
+        var attacker = currentCharacter.CharacterData;
+        var targetData = target.CharacterData;
+
+        // Check: mag dit target geraakt worden?
+        if (!selectedAbility.validTargetPositions.Contains(targetData.position))
+        {
+            Debug.Log("Invalid target position!");
             return;
+        }
 
-        waitingForTarget = false;
+        attacker._target = targetData;
+        attacker.Attack(selectedAbility);
 
-        // Zet target
-        currentCharacter.CharacterData._target = target.CharacterData;
-
-        // Voer ability uit (basic attack of andere)
-        currentCharacter.CharacterData.Attack(selectedAbility);
-
-        Debug.Log(
-            $"{currentCharacter.CharacterData.CharacterName} gebruikt {selectedAbility.abilityName} op {target.CharacterData.CharacterName}"
-        );
-
-        selectedAbility = null;
-
-        // Volgende beurt
         NextTurn();
     }
 

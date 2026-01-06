@@ -5,6 +5,7 @@ using TMPro;
 using UnityEditor.Playables;
 using UnityEditor.U2D.Animation;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
@@ -16,6 +17,7 @@ public class characterData
 
     public int maxCharacterHealth;
     public int CurrentHealth;
+    public int position; // 0 = front, 3 = back
 
     public float CharacterSpeed;
     public float CurrentSpeed;
@@ -94,30 +96,27 @@ public class characterData
     }
     public void Attack(abilityData ability)
     {
-        if (characterState == CharacterState.Died)
+        if (characterState == CharacterState.Died || _target == null)
             return;
-
-        if (_target == null)
-        {
-            Debug.LogError($"{CharacterName} tried to attack but has no target!");
-            return;
-        }
 
         characterState = CharacterState.Attacking;
 
         switch (ability.outputType)
         {
-            case AblilityOutputType.Heal:
-                _target.Heal(ability.abValue);
+            case AblilityOutputType.Damage:
+                int damage = UnityEngine.Random.Range(ability.minDamage, ability.maxDamage + 1);
+                _target.WasDamaged(damage);
+                Debug.Log($"{CharacterName} dealt {damage} damage!");
                 break;
 
-            case AblilityOutputType.Damage:
-                _target.WasDamaged(ability.abValue);
+            case AblilityOutputType.Heal:
+                _target.Heal(ability.healAmount);
                 break;
         }
 
         OnAttack?.Invoke();
     }
+
 
 
     public void Heal(int healAmount)
@@ -173,11 +172,20 @@ public class characterUIData
 
     public void Init(int MaxHealth, int CurrentHealth, string CharName)
     {
+        if (healthSlider == null)
+        {
+            Debug.LogError("HealthSlider is NULL!");
+            return;
+        }
+
         healthSlider.maxValue = MaxHealth;
         healthSlider.value = CurrentHealth;
-        healthText.text = CurrentHealth + " /" + MaxHealth;
 
-        characterNameText.text = CharName;
+        if (healthText != null)
+            healthText.text = CurrentHealth + " / " + MaxHealth;
+
+        if (characterNameText != null)
+            characterNameText.text = CharName;
     }
 
     public void InitEnemy(int MaxHealth, int CurrentHealth)
