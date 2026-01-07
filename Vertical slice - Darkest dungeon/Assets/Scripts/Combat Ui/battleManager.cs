@@ -11,6 +11,7 @@ public class battleManager : MonoBehaviour
     public bool waitingForTarget = false;
 
     public static battleManager instance;
+    public uiManagment uiManager;
 
     public List<characterControl> allCharacters = new List<characterControl>();
     private Queue<characterControl> turnOrder = new Queue<characterControl>();
@@ -26,11 +27,20 @@ public class battleManager : MonoBehaviour
 
     private void Start()
     {
-        friendlyCharacters = allCharacters.FindAll(x => x.CharacterData.characterType == CharacterType.Player);
+        StartCoroutine(StartBattleCoroutine());
+    }
+
+    private IEnumerator StartBattleCoroutine()
+    {
+        yield return null; // wacht 1 frame
+
+        friendlyCharacters = allCharacters.FindAll(
+            x => x.CharacterData.characterType == CharacterType.Player
+        );
+
         GenerateTurnOrder();
         NextTurn();
     }
-
     public void GenerateTurnOrder()
     {
         allCharacters.Sort((a, b) =>
@@ -53,32 +63,34 @@ public class battleManager : MonoBehaviour
         }
 
         currentCharacter.CharacterData.characterState = CharacterState.Ready;
+
         Debug.Log("Turn: " + currentCharacter.CharacterData.CharacterName);
 
-        if (currentCharacter.CharacterData.characterType == CharacterType.Enemy)
+        if (currentCharacter.CharacterData.characterType == CharacterType.Player)
         {
-            StartCoroutine(EnemyTurn());
-        }
-        else
-        {
-            // Player turn → UI aanzetten
             waitingForTarget = false;
+            selectedAbility = null;
+
+            uiManager.ShowAbilities(currentCharacter.CharacterData);
+        }
+        else 
+        {
+            uiManager.HideAbilities();
+            waitingForTarget = false;
+
+            StartCoroutine(EnemyTurn());
         }
 
         turnOrder.Enqueue(currentCharacter);
     }
 
-    // UI → knop roept deze functie aan
     public void DoBasicAttackFromButton()
     {
-        // Alleen player mag dit doen
         if (currentCharacter.CharacterData.characterType != CharacterType.Player)
             return;
 
-        // Zet basic attack als geselecteerde ability
         selectedAbility = currentCharacter.CharacterData.basicAttack;
 
-        // Wacht op enemy klik
         waitingForTarget = true;
 
         Debug.Log("Basic Attack selected, waiting for target...");
