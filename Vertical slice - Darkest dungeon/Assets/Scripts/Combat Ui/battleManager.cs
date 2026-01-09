@@ -32,7 +32,7 @@ public class battleManager : MonoBehaviour
 
     private IEnumerator StartBattleCoroutine()
     {
-        yield return null; // wacht 1 frame
+        yield return null;
 
         friendlyCharacters = allCharacters.FindAll(
             x => x.CharacterData.characterType == CharacterType.Player
@@ -111,32 +111,6 @@ public class battleManager : MonoBehaviour
         selectedAbility = ability;
         waitingForTarget = true;
     }
-
-
-    /* public void TargetSelected(characterControl target)
-     {
-         // Alleen doorgaan als we echt targeten
-         if (!waitingForTarget || selectedAbility == null)
-             return;
-
-         waitingForTarget = false;
-
-         // Zet target
-         currentCharacter.CharacterData._target = target.CharacterData;
-
-         // Voer ability uit (basic attack of andere)
-         currentCharacter.CharacterData.Attack(selectedAbility);
-
-         Debug.Log(
-             $"{currentCharacter.CharacterData.CharacterName} gebruikt {selectedAbility.abilityName} op {target.CharacterData.CharacterName}"
-         );
-
-         selectedAbility = null;
-
-         // Volgende beurt
-         NextTurn();
-     }*/
-
     public void TargetSelected(characterControl target)
     {
         var attacker = currentCharacter.CharacterData;
