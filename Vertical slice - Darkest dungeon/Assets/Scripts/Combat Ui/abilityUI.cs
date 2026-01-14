@@ -8,7 +8,7 @@ public class abilityUI : MonoBehaviour, IPointerDownHandler
     public int abilityIndex;
 
     [SerializeField] private TextMeshProUGUI abilityName;
-    [SerializeField] private Image abilityIcon;   // 👈 NIEUW
+    [SerializeField] private Image abilityIcon;
 
     public void init(abilityData data)
     {
