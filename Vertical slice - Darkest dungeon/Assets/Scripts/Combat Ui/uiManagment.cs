@@ -9,6 +9,7 @@ public class uiManagment : MonoBehaviour
 
     public void ShowAbilities(characterData data)
     {
+
         abilityPanel.SetActive(true);
 
         // Oude abilities verwijderen
@@ -25,7 +26,7 @@ public class uiManagment : MonoBehaviour
             var ui = go.GetComponent<abilityUI>();
 
             ui.abilityIndex = i;
-            ui.init(ability.abilityName);
+            ui.init(ability);
         }
     }
 

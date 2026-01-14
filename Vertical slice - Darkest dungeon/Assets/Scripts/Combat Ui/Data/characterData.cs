@@ -1,14 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Playables;
-using UnityEditor.U2D.Animation;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
 
 [Serializable]
 public class characterData
@@ -18,6 +13,8 @@ public class characterData
     public int maxCharacterHealth;
     public int CurrentHealth;
     public int position; // 0 = front, 3 = back
+    public int MaxStress;
+    public int CurrentStress;
 
     public float CharacterSpeed;
     public float CurrentSpeed;
@@ -143,7 +140,7 @@ public class characterData
             CharUI.UpdateHealth(CurrentHealth);
         }
         if (characterType == CharacterType.Enemy)
-            {
+        {
             CharUI.UpdateHealthEnemy(CurrentHealth);
         }
 

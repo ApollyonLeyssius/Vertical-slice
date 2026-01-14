@@ -1,7 +1,6 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 [Serializable]
 public class abilityData
 {
@@ -19,6 +18,8 @@ public class abilityData
     [Header("Position Rules")]
     public List<int> usableFromPositions;
     public List<int> validTargetPositions;
+
+    public Sprite abilityIcon;
 
     [Header("Targeting")]
     public bool targetsAll;
