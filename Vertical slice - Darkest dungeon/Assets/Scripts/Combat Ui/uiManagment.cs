@@ -5,25 +5,33 @@ public class uiManagment : MonoBehaviour
     public Transform abilityUiHolder;
     public GameObject abilityUiPrefab;
 
+    public GameObject abilityPanel; // hele ability UI (panel)
 
-    public void Abilitywindow(characterData data)
+    public void ShowAbilities(characterData data)
     {
-        // Eerst oude knoppen verwijderen
+
+        abilityPanel.SetActive(true);
+
+        // Oude abilities verwijderen
         foreach (Transform child in abilityUiHolder)
         {
             Destroy(child.gameObject);
         }
 
-        // Nieuwe ability knoppen aanmaken
+        // Nieuwe abilities maken
         for (int i = 0; i < data.Abilities.Count; i++)
         {
             var ability = data.Abilities[i];
-
-            GameObject btn = Instantiate(abilityUiPrefab, abilityUiHolder);
-            var ui = btn.GetComponent<abilityUI>();
+            var go = Instantiate(abilityUiPrefab, abilityUiHolder);
+            var ui = go.GetComponent<abilityUI>();
 
             ui.abilityIndex = i;
-            ui.init(ability.abilityName);
+            ui.init(ability);
         }
+    }
+
+    public void HideAbilities()
+    {
+        abilityPanel.SetActive(false);
     }
 }

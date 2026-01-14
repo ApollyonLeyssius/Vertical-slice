@@ -12,6 +12,9 @@ public class characterData
 
     public int maxCharacterHealth;
     public int CurrentHealth;
+    public int position; // 0 = front, 3 = back
+    public int MaxStress;
+    public int CurrentStress;
 
     public float CharacterSpeed;
     public float CurrentSpeed;
@@ -20,10 +23,7 @@ public class characterData
     public CharacterType characterType;
 
     [Space(10)]
-
     public characterData _target;
-
-    [Space(10)]
 
     public characterUIData CharUI;
 
@@ -43,11 +43,11 @@ public class characterData
 
 
     public bool PlayerJustAttacked;
-    public bool canAttack
+    public bool isAttackable
     {
         get
         {
-            return _target.characterState == CharacterState.Idle || _target.characterState == CharacterState.Ready;
+            return characterState == CharacterState.Idle || characterState == CharacterState.Ready;
         }
     }
 
@@ -68,6 +68,14 @@ public class characterData
         }
     }
 
+    public bool IsAlive
+    {
+        get
+        {
+            return characterState != CharacterState.Died;
+        }
+    }
+
     public void Init()
     {
         if (characterType == CharacterType.Player)
@@ -83,27 +91,30 @@ public class characterData
 
         characterState = CharacterState.Idle;
     }
-
     public void Attack(abilityData ability)
     {
-        if (characterState == CharacterState.Died)
+        if (characterState == CharacterState.Died || _target == null)
             return;
+
+        characterState = CharacterState.Attacking;
 
         switch (ability.outputType)
         {
-            case AblilityOutputType.Heal:
-                _target.Heal(ability.abValue);
-                break;
             case AblilityOutputType.Damage:
-                _target.WasDamaged(ability.abValue);
+                int damage = UnityEngine.Random.Range(ability.minDamage, ability.maxDamage + 1);
+                _target.WasDamaged(damage);
+                Debug.Log($"{CharacterName} dealt {damage} damage!");
+                break;
+
+            case AblilityOutputType.Heal:
+                _target.Heal(ability.healAmount);
                 break;
         }
 
         OnAttack?.Invoke();
-
-        _target.WasDamaged(ability.abValue);
-        characterState = CharacterState.Attacking;
     }
+
+
 
     public void Heal(int healAmount)
     {
@@ -128,6 +139,10 @@ public class characterData
         {
             CharUI.UpdateHealth(CurrentHealth);
         }
+        if (characterType == CharacterType.Enemy)
+        {
+            CharUI.UpdateHealthEnemy(CurrentHealth);
+        }
 
         OnWasAttacked?.Invoke();
 
@@ -143,23 +158,6 @@ public class characterData
     {
         UnityEngine.Debug.Log(CharacterName + " was attacked!");
     }
-
-    /* public IEnumerator CharacterLoop()
-     {
-         while (characterState != CharacterState.Died)
-         {
-             if (CurrentSpeed >= CharacterSpeed)
-             {
-                 CurrentSpeed = CharacterSpeed;
-             }
-             else
-             {
-                 CurrentSpeed += Time.deltaTime;
-                 characterState = CharacterState.Idle;
-             }
-             yield return null;
-         }
-     }*/
 }
 
 [Serializable]
@@ -171,11 +169,20 @@ public class characterUIData
 
     public void Init(int MaxHealth, int CurrentHealth, string CharName)
     {
+        if (healthSlider == null)
+        {
+            Debug.LogError("HealthSlider is NULL!");
+            return;
+        }
+
         healthSlider.maxValue = MaxHealth;
         healthSlider.value = CurrentHealth;
-        healthText.text = CurrentHealth + " /" + MaxHealth;
 
-        characterNameText.text = CharName;
+        if (healthText != null)
+            healthText.text = CurrentHealth + " / " + MaxHealth;
+
+        if (characterNameText != null)
+            characterNameText.text = CharName;
     }
 
     public void InitEnemy(int MaxHealth, int CurrentHealth)
@@ -189,7 +196,13 @@ public class characterUIData
         healthSlider.value = CurrentHealth;
         healthText.text = CurrentHealth + " /" + healthSlider.maxValue;
     }
+
+    public void UpdateHealthEnemy(int CurrentHealth)
+    {
+        healthSlider.value = CurrentHealth;
+    }
 }
+
 
 public enum CharacterType
 {
@@ -204,6 +217,7 @@ public enum CharacterState
     Ready,
     Attacked,
     Attacking,
-    Died
+    Died,
+    TryingToAttack
 }
 

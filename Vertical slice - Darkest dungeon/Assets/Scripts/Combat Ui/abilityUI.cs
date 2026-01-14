@@ -1,23 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class abilityUI : MonoBehaviour, IPointerDownHandler
 {
-    public int abilityIndex = 0;
-    [SerializeField] private TextMeshProUGUI abilityName;
+    public int abilityIndex;
 
-    public void init(string abilityName)
+    [SerializeField] private TextMeshProUGUI abilityName;
+    [SerializeField] private Image abilityIcon;   // 👈 NIEUW
+
+    public void init(abilityData data)
     {
-        this.abilityName.text = abilityName;
+        abilityName.text = data.abilityName;
+        abilityIcon.sprite = data.abilityIcon;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        // Ability selecteren in battleManager
         battleManager.instance.SelectAbility(abilityIndex);
     }
- }
+}

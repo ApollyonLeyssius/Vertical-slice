@@ -2,10 +2,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 
-public class characterControl : MonoBehaviour
+public class characterControl : MonoBehaviour, IPointerClickHandler
 {
     public characterData CharacterData;
     public characterControl targetData;
+
+    public Coroutine AttackQueue;
+    public Coroutine Enemybehaviour;
 
     private void Awake()
     {
@@ -15,18 +18,16 @@ public class characterControl : MonoBehaviour
     private void Start()
     {
         CharacterData.Init();
-        CharacterData._target = targetData.CharacterData;
 
         battleManager.instance.allCharacters.Add(this);
     }
-
     public void OnPointerClick(PointerEventData eventData)
     {
-        // Alleen als battleManager op een target wacht
+        Debug.Log("Clicked on: " + CharacterData.CharacterName);
+
         if (battleManager.instance.waitingForTarget)
         {
             battleManager.instance.TargetSelected(this);
         }
     }
 }
-

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.U2D.Animation;
 using UnityEngine;
 
 public class battleManager : MonoBehaviour
@@ -11,11 +10,14 @@ public class battleManager : MonoBehaviour
     public bool waitingForTarget = false;
 
     public static battleManager instance;
+    public uiManagment uiManager;
 
     public List<characterControl> allCharacters = new List<characterControl>();
     private Queue<characterControl> turnOrder = new Queue<characterControl>();
 
     public characterControl currentCharacter;
+    public List<characterControl> friendlyCharacters = new List<characterControl>();
+
 
     private void Awake()
     {
@@ -24,13 +26,22 @@ public class battleManager : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(StartBattleCoroutine());
+    }
+
+    private IEnumerator StartBattleCoroutine()
+    {
+        yield return null;
+
+        friendlyCharacters = allCharacters.FindAll(
+            x => x.CharacterData.characterType == CharacterType.Player
+        );
+
         GenerateTurnOrder();
         NextTurn();
     }
-
     public void GenerateTurnOrder()
     {
-        // Sorteer op Speed
         allCharacters.Sort((a, b) =>
             b.CharacterData.CharacterSpeed.CompareTo(a.CharacterData.CharacterSpeed));
 
@@ -44,54 +55,106 @@ public class battleManager : MonoBehaviour
     {
         currentCharacter = turnOrder.Dequeue();
 
-        Debug.Log("Turn: " + currentCharacter.CharacterData.CharacterName);
+        if (!currentCharacter.CharacterData.IsAlive)
+        {
+            NextTurn();
+            return;
+        }
 
-        // Zet in actieve beurt
         currentCharacter.CharacterData.characterState = CharacterState.Ready;
 
-        // Zet character terug in de queue voor volgende rondes
+        Debug.Log("Turn: " + currentCharacter.CharacterData.CharacterName);
+
+        if (currentCharacter.CharacterData.characterType == CharacterType.Player)
+        {
+            waitingForTarget = false;
+            selectedAbility = null;
+
+            uiManager.ShowAbilities(currentCharacter.CharacterData);
+        }
+        else 
+        {
+            uiManager.HideAbilities();
+            waitingForTarget = false;
+
+            StartCoroutine(EnemyTurn());
+        }
+
         turnOrder.Enqueue(currentCharacter);
     }
 
-    // UI → knop roept deze functie aan
     public void DoBasicAttackFromButton()
     {
-        var data = currentCharacter.CharacterData;
-
-        if (data.characterState != CharacterState.Ready)
+        if (currentCharacter.CharacterData.characterType != CharacterType.Player)
             return;
 
-        if (data._target.canBeAttacked)
-        {
-            data.Attack(data.basicAttack);
-        }
+        selectedAbility = currentCharacter.CharacterData.basicAttack;
 
-        NextTurn();
+        waitingForTarget = true;
+
+        Debug.Log("Basic Attack selected, waiting for target...");
     }
 
     public void SelectAbility(int index)
     {
-        var data = currentCharacter.CharacterData.Abilities;
-        selectedAbility = data[index];
+        var data = currentCharacter.CharacterData;
+        var ability = data.Abilities[index];
 
+        // Check: mag deze ability vanaf deze positie?
+        if (!ability.usableFromPositions.Contains(data.position))
+        {
+            Debug.Log("Ability cannot be used from this position!");
+            return;
+        }
+
+        selectedAbility = ability;
         waitingForTarget = true;
-        Debug.Log("Selected ability: " + selectedAbility.abilityName);
     }
-
     public void TargetSelected(characterControl target)
     {
-        if (!waitingForTarget) return;
+        var attacker = currentCharacter.CharacterData;
+        var targetData = target.CharacterData;
 
-        waitingForTarget = false;
+        // Check: mag dit target geraakt worden?
+        if (!selectedAbility.validTargetPositions.Contains(targetData.position))
+        {
+            Debug.Log("Invalid target position!");
+            return;
+        }
 
-        // Voer ability uit
-        currentCharacter.CharacterData._target = target.CharacterData;
-        currentCharacter.CharacterData.Attack(selectedAbility);
+        attacker._target = targetData;
+        attacker.Attack(selectedAbility);
 
-        // Reset
-        selectedAbility = null;
+        NextTurn();
+    }
 
-        // Volgende beurt
+    private IEnumerator EnemyTurn()
+    {
+        // Kleine delay zodat het leesbaar is
+        yield return new WaitForSeconds(0.8f);
+
+        var enemyData = currentCharacter.CharacterData;
+
+        // Kies ability
+        abilityData ability = enemyData.basicAttack;
+
+        // Kies random levende player
+        var targets = allCharacters.FindAll(x =>
+            x.CharacterData.characterType == CharacterType.Player &&
+            x.CharacterData.IsAlive);
+
+        if (targets.Count == 0)
+            yield break;
+
+        var target = targets[Random.Range(0, targets.Count)];
+
+        enemyData._target = target.CharacterData;
+        enemyData.Attack(ability);
+
+        Debug.Log($"{enemyData.CharacterName} gebruikt {ability.abilityName} op {target.CharacterData.CharacterName}");
+
+        yield return new WaitForSeconds(0.5f);
+
         NextTurn();
     }
 
