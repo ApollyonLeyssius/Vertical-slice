@@ -522,7 +522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f28c2b6cad4e5c42b956798def1f0db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemEffects: {fileID: 5173802272023124668, guid: 4d6de496f693460489e104808149698a, type: 3}
+  ItemEffects: {fileID: 2730753485600516265, guid: fca3e08a2e1b87d4683b61e334e0a6eb, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
