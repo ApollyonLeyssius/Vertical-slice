@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -95,7 +95,217 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Props copy_0
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 541
+        width: 157
+        height: 494
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54a44a674fc412a438061e8c07598785
+      internalID: -1235284550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props copy_1
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 560
+        width: 199
+        height: 455
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7b71b9c844201e409c557bfad46c334
+      internalID: 980731790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props copy_2
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 555
+        width: 242
+        height: 480
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bf9f8800fca73441a842469a2f0b914
+      internalID: -2110322809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props copy_3
+      rect:
+        serializedVersion: 2
+        x: 1358
+        y: 628
+        width: 348
+        height: 319
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a432c1d47c35e745bdceea3d0c94ba3
+      internalID: -1763432835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props copy_4
+      rect:
+        serializedVersion: 2
+        x: 1019
+        y: 31
+        width: 243
+        height: 483
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee7294f9c465bdc409a66a36e63bfe16
+      internalID: 554605940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props copy_5
+      rect:
+        serializedVersion: 2
+        x: 1480
+        y: 62
+        width: 304
+        height: 419
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8e75655f3ca8354486779eeb61dbd16
+      internalID: -724961902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props copy_6
+      rect:
+        serializedVersion: 2
+        x: 1665
+        y: 477
+        width: 8
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80cff038ce0a3a948befc9c5ae5543ae
+      internalID: -744738442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props copy_7
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 47
+        width: 288
+        height: 408
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23d806271a555ea44a8baf06676d5404
+      internalID: 1240553593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props copy_8
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 63
+        width: 233
+        height: 375
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 473a8ba4a7620bb4c8e2cf6267323ab5
+      internalID: -1055278476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props copy_9
+      rect:
+        serializedVersion: 2
+        x: 1354
+        y: 287
+        width: 30
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 676a593395b171b44b1b028ffdda05ce
+      internalID: 672400220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -106,7 +316,17 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Props copy_0: -1235284550
+      Props copy_1: 980731790
+      Props copy_2: -2110322809
+      Props copy_3: -1763432835
+      Props copy_4: 554605940
+      Props copy_5: -724961902
+      Props copy_6: -744738442
+      Props copy_7: 1240553593
+      Props copy_8: -1055278476
+      Props copy_9: 672400220
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
