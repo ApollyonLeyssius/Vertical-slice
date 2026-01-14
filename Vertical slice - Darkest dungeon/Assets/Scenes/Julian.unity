@@ -666,6 +666,8 @@ MonoBehaviour:
     maxCharacterHealth: 100
     CurrentHealth: 100
     position: 0
+    MaxStress: 0
+    CurrentStress: 0
     CharacterSpeed: 4
     CurrentSpeed: 4
     characterState: 0
@@ -2285,6 +2287,8 @@ MonoBehaviour:
     maxCharacterHealth: 100
     CurrentHealth: 100
     position: 1
+    MaxStress: 0
+    CurrentStress: 0
     CharacterSpeed: 1
     CurrentSpeed: 1
     characterState: 0
@@ -2301,7 +2305,7 @@ MonoBehaviour:
       outputType: 0
       usableFromPositions: 00000000010000000200000003000000
       validTargetPositions: 00000000010000000200000003000000
-      abilityIcon: {fileID: 1115048264375333468, guid: b96631c7c1eab264d905321b75246e2d, type: 3}
+      abilityIcon: {fileID: 557623478, guid: 96345d4fadba56a479daa130608ef32c, type: 3}
       targetsAll: 0
       targetsSelf: 0
       critChance: 0
@@ -2313,7 +2317,7 @@ MonoBehaviour:
       outputType: 0
       usableFromPositions: 00000000
       validTargetPositions: 00000000010000000200000003000000
-      abilityIcon: {fileID: -4542719286810662012, guid: 56c21a42e6d1adb44b735dfe650f20e0, type: 3}
+      abilityIcon: {fileID: 408789307, guid: 96345d4fadba56a479daa130608ef32c, type: 3}
       targetsAll: 0
       targetsSelf: 0
       critChance: 0
@@ -3877,7 +3881,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8155632751615294693, guid: 1f44533e8e5482d469a0672b727b954a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4914,6 +4918,8 @@ MonoBehaviour:
     maxCharacterHealth: 100
     CurrentHealth: 100
     position: 1
+    MaxStress: 0
+    CurrentStress: 0
     CharacterSpeed: 6
     CurrentSpeed: 6
     characterState: 0
@@ -5079,6 +5085,8 @@ MonoBehaviour:
     maxCharacterHealth: 100
     CurrentHealth: 100
     position: 3
+    MaxStress: 0
+    CurrentStress: 0
     CharacterSpeed: 3
     CurrentSpeed: 3
     characterState: 0
@@ -5389,6 +5397,8 @@ MonoBehaviour:
     maxCharacterHealth: 100
     CurrentHealth: 100
     position: 2
+    MaxStress: 0
+    CurrentStress: 0
     CharacterSpeed: 2
     CurrentSpeed: 2
     characterState: 0
@@ -5611,6 +5621,8 @@ MonoBehaviour:
     maxCharacterHealth: 100
     CurrentHealth: 100
     position: 0
+    MaxStress: 0
+    CurrentStress: 0
     CharacterSpeed: 5
     CurrentSpeed: 5
     characterState: 0
