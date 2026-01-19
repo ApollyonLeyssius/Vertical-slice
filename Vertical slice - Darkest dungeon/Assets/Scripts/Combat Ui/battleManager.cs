@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +18,6 @@ public class battleManager : MonoBehaviour
     public characterControl currentCharacter;
     public List<characterControl> friendlyCharacters = new List<characterControl>();
 
-    private bool turnInProgress;
 
     private void Awake()
     {
@@ -41,23 +40,19 @@ public class battleManager : MonoBehaviour
         GenerateTurnOrder();
         NextTurn();
     }
-
     public void GenerateTurnOrder()
     {
-        turnOrder.Clear();
-
         allCharacters.Sort((a, b) =>
             b.CharacterData.CharacterSpeed.CompareTo(a.CharacterData.CharacterSpeed));
 
         foreach (var c in allCharacters)
+        {
             turnOrder.Enqueue(c);
+        }
     }
 
     public void NextTurn()
     {
-        if (turnInProgress)
-            return;
-
         currentCharacter = turnOrder.Dequeue();
 
         if (!currentCharacter.CharacterData.IsAlive)
@@ -68,16 +63,20 @@ public class battleManager : MonoBehaviour
 
         currentCharacter.CharacterData.characterState = CharacterState.Ready;
 
+        Debug.Log("Turn: " + currentCharacter.CharacterData.CharacterName);
+
         if (currentCharacter.CharacterData.characterType == CharacterType.Player)
         {
             waitingForTarget = false;
             selectedAbility = null;
+
             uiManager.ShowAbilities(currentCharacter.CharacterData);
         }
-        else
+        else 
         {
             uiManager.HideAbilities();
             waitingForTarget = false;
+
             StartCoroutine(EnemyTurn());
         }
 
@@ -90,7 +89,10 @@ public class battleManager : MonoBehaviour
             return;
 
         selectedAbility = currentCharacter.CharacterData.basicAttack;
+
         waitingForTarget = true;
+
+        Debug.Log("Basic Attack selected, waiting for target...");
     }
 
     public void SelectAbility(int index)
@@ -98,88 +100,78 @@ public class battleManager : MonoBehaviour
         var data = currentCharacter.CharacterData;
         var ability = data.Abilities[index];
 
+        // Check: mag deze ability vanaf deze positie?
         if (!ability.usableFromPositions.Contains(data.position))
+        {
+            Debug.Log("Ability cannot be used from this position!");
             return;
+        }
 
         selectedAbility = ability;
         waitingForTarget = true;
     }
-
     public void TargetSelected(characterControl target)
     {
-        if (turnInProgress || selectedAbility == null)
-            return;
-
         var attacker = currentCharacter.CharacterData;
         var targetData = target.CharacterData;
 
+        // Check: mag dit target geraakt worden?
         if (!selectedAbility.validTargetPositions.Contains(targetData.position))
-            return;
-
-        turnInProgress = true;
-
-        attacker._target = targetData;
-
-        if (AttackCameraController.Instance != null)
         {
-            AttackCameraController.Instance.PlayAttack(
-                attacker._charCont.transform,
-                target.transform
-            );
+<<<<<<< Updated upstream
+            Debug.Log("Invalid target position!");
+            return;
+=======
+            AttackCameraController.Instance.PlayAttackByIndex(2, 1);
+            
+>>>>>>> Stashed changes
         }
 
+        attacker._target = targetData;
         attacker.Attack(selectedAbility);
 
-        StartCoroutine(EndTurnAfterDelay(0.25f));
+        NextTurn();
     }
 
     private IEnumerator EnemyTurn()
     {
-        yield return new WaitForSeconds(0.6f);
-
-        if (!currentCharacter.CharacterData.IsAlive)
-        {
-            NextTurn();
-            yield break;
-        }
+        // Kleine delay zodat het leesbaar is
+        yield return new WaitForSeconds(0.8f);
 
         var enemyData = currentCharacter.CharacterData;
+
+        // Kies ability
         abilityData ability = enemyData.basicAttack;
 
+        // Kies random levende player
         var targets = allCharacters.FindAll(x =>
             x.CharacterData.characterType == CharacterType.Player &&
             x.CharacterData.IsAlive);
 
         if (targets.Count == 0)
-        {
-            NextTurn();
             yield break;
-        }
 
         var target = targets[Random.Range(0, targets.Count)];
 
+<<<<<<< Updated upstream
+=======
         turnInProgress = true;
 
         if (AttackCameraController.Instance != null)
         {
-            AttackCameraController.Instance.PlayAttack(
-                currentCharacter.transform,
-                target.transform
-            );
+            AttackCameraController.Instance.PlayAttackByIndex(2, 1);
+            
         }
 
+>>>>>>> Stashed changes
         enemyData._target = target.CharacterData;
         enemyData.Attack(ability);
 
-        yield return new WaitForSeconds(0.25f);
-        turnInProgress = false;
+        Debug.Log($"{enemyData.CharacterName} gebruikt {ability.abilityName} op {target.CharacterData.CharacterName}");
+
+        yield return new WaitForSeconds(0.5f);
+
         NextTurn();
     }
 
-    private IEnumerator EndTurnAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        turnInProgress = false;
-        NextTurn();
-    }
 }
