@@ -118,13 +118,8 @@ public class battleManager : MonoBehaviour
         // Check: mag dit target geraakt worden?
         if (!selectedAbility.validTargetPositions.Contains(targetData.position))
         {
-<<<<<<< Updated upstream
             Debug.Log("Invalid target position!");
             return;
-=======
-            AttackCameraController.Instance.PlayAttackByIndex(2, 1);
-            
->>>>>>> Stashed changes
         }
 
         attacker._target = targetData;
@@ -153,17 +148,6 @@ public class battleManager : MonoBehaviour
 
         var target = targets[Random.Range(0, targets.Count)];
 
-<<<<<<< Updated upstream
-=======
-        turnInProgress = true;
-
-        if (AttackCameraController.Instance != null)
-        {
-            AttackCameraController.Instance.PlayAttackByIndex(2, 1);
-            
-        }
-
->>>>>>> Stashed changes
         enemyData._target = target.CharacterData;
         enemyData.Attack(ability);
 
