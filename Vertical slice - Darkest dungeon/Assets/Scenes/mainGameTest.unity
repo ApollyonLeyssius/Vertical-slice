@@ -1469,18 +1469,78 @@ MonoBehaviour:
     CharacterName: Plague Doctor
     maxCharacterHealth: 21
     CurrentHealth: 21
-    position: 0
+    position: 3
     MaxStress: 0
     CurrentStress: 0
-    CharacterSpeed: 4
-    CurrentSpeed: 4
+    CharacterSpeed: 2
+    CurrentSpeed: 2
     characterState: 0
     characterType: 0
     CharUI:
       healthSlider: {fileID: 584586726}
       healthText: {fileID: 1222867083}
       characterNameText: {fileID: 1458536735}
-    Abilities: []
+    Abilities:
+    - abilityName: Move
+      minDamage: 6
+      maxDamage: 7
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 000000000100000002000000
+      validTargetPositions: 00000000010000000200000003000000
+      abilityIcon: {fileID: -1118324893, guid: 266cf0856934f7f44835978856e0c01c, type: 3}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
+    - abilityName: Move
+      minDamage: 6
+      maxDamage: 7
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 000000000100000002000000
+      validTargetPositions: 00000000010000000200000003000000
+      abilityIcon: {fileID: -1118324893, guid: 266cf0856934f7f44835978856e0c01c, type: 3}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
+    - abilityName: Move
+      minDamage: 6
+      maxDamage: 7
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 000000000100000002000000
+      validTargetPositions: 00000000010000000200000003000000
+      abilityIcon: {fileID: -1118324893, guid: 266cf0856934f7f44835978856e0c01c, type: 3}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
+    - abilityName: Move
+      minDamage: 6
+      maxDamage: 7
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 000000000100000002000000
+      validTargetPositions: 00000000010000000200000003000000
+      abilityIcon: {fileID: -1118324893, guid: 266cf0856934f7f44835978856e0c01c, type: 3}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
+    - abilityName: Move
+      minDamage: 6
+      maxDamage: 7
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 000000000100000002000000
+      validTargetPositions: 00000000010000000200000003000000
+      abilityIcon: {fileID: -1118324893, guid: 266cf0856934f7f44835978856e0c01c, type: 3}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
     basicAttack:
       abilityName: 
       minDamage: 3
@@ -4298,15 +4358,75 @@ MonoBehaviour:
     position: 0
     MaxStress: 0
     CurrentStress: 0
-    CharacterSpeed: 2
-    CurrentSpeed: 2
+    CharacterSpeed: 4
+    CurrentSpeed: 4
     characterState: 0
     characterType: 0
     CharUI:
       healthSlider: {fileID: 1442739733}
       healthText: {fileID: 1222867083}
       characterNameText: {fileID: 1458536735}
-    Abilities: []
+    Abilities:
+    - abilityName: Smite
+      minDamage: 6
+      maxDamage: 7
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 0000000001000000
+      validTargetPositions: 0000000001000000
+      abilityIcon: {fileID: 557623478, guid: 96345d4fadba56a479daa130608ef32c, type: 3}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
+    - abilityName: Zealous Accusation
+      minDamage: 5
+      maxDamage: 7
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 0000000001000000
+      validTargetPositions: 0000000001000000
+      abilityIcon: {fileID: -1914389145, guid: 96345d4fadba56a479daa130608ef32c, type: 3}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
+    - abilityName: Stunning Blow
+      minDamage: 4
+      maxDamage: 5
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 0000000001000000
+      validTargetPositions: 0000000001000000
+      abilityIcon: {fileID: -54907296, guid: 96345d4fadba56a479daa130608ef32c, type: 3}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
+    - abilityName: Bulwark of Faith
+      minDamage: 8
+      maxDamage: 9
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 0000000001000000
+      validTargetPositions: 0000000001000000
+      abilityIcon: {fileID: 408789307, guid: 96345d4fadba56a479daa130608ef32c, type: 3}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
+    - abilityName: Move
+      minDamage: 6
+      maxDamage: 7
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 000000000100000002000000
+      validTargetPositions: 00000000010000000200000003000000
+      abilityIcon: {fileID: -1118324893, guid: 266cf0856934f7f44835978856e0c01c, type: 3}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
     basicAttack:
       abilityName: 
       minDamage: 3
@@ -9387,15 +9507,27 @@ MonoBehaviour:
       healthSlider: {fileID: 2112771653}
       healthText: {fileID: 1222867083}
       characterNameText: {fileID: 1458536735}
-    Abilities: []
+    Abilities:
+    - abilityName: basic
+      minDamage: 4
+      maxDamage: 5
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 00000000010000000200000003000000
+      validTargetPositions: 00000000010000000200000003000000
+      abilityIcon: {fileID: 0}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
     basicAttack:
       abilityName: 
       minDamage: 3
       maxDamage: 7
       healAmount: 0
       outputType: 0
-      usableFromPositions: 
-      validTargetPositions: 
+      usableFromPositions: 00000000010000000200000003000000
+      validTargetPositions: 00000000010000000200000003000000
       abilityIcon: {fileID: 0}
       targetsAll: 0
       targetsSelf: 0
@@ -10278,7 +10410,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1226808675
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13474,7 +13606,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 71, y: 0}
+  m_AnchoredPosition: {x: 117.6, y: 53.3}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1577052140 stripped
@@ -13530,15 +13662,27 @@ MonoBehaviour:
       healthSlider: {fileID: 194298734}
       healthText: {fileID: 1222867083}
       characterNameText: {fileID: 1458536735}
-    Abilities: []
+    Abilities:
+    - abilityName: basic
+      minDamage: 4
+      maxDamage: 5
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 00000000010000000200000003000000
+      validTargetPositions: 00000000010000000200000003000000
+      abilityIcon: {fileID: 0}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
     basicAttack:
       abilityName: 
       minDamage: 3
       maxDamage: 7
       healAmount: 0
       outputType: 0
-      usableFromPositions: 
-      validTargetPositions: 
+      usableFromPositions: 00000000010000000200000003000000
+      validTargetPositions: 00000000010000000200000003000000
       abilityIcon: {fileID: 0}
       targetsAll: 0
       targetsSelf: 0
@@ -15931,15 +16075,27 @@ MonoBehaviour:
       healthSlider: {fileID: 1363658448}
       healthText: {fileID: 1222867083}
       characterNameText: {fileID: 1458536735}
-    Abilities: []
+    Abilities:
+    - abilityName: basic
+      minDamage: 4
+      maxDamage: 5
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 00000000010000000200000003000000
+      validTargetPositions: 00000000010000000200000003000000
+      abilityIcon: {fileID: 0}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
     basicAttack:
       abilityName: 
       minDamage: 3
       maxDamage: 7
       healAmount: 0
       outputType: 0
-      usableFromPositions: 
-      validTargetPositions: 
+      usableFromPositions: 00000000010000000200000003000000
+      validTargetPositions: 00000000010000000200000003000000
       abilityIcon: {fileID: 0}
       targetsAll: 0
       targetsSelf: 0
