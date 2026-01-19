@@ -6,9 +6,10 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public static event Action Clicked;
+    [SerializeField] private int itemCount;
     void Start()
     {
-        
+        itemCount = 2;
     }
 
     // Update is called once per frame
@@ -22,6 +23,7 @@ public class Item : MonoBehaviour
             if (hit.collider != null)
             {
                 Clicked?.Invoke();
+                this.gameObject.SetActive(false);
             }
 
         }
