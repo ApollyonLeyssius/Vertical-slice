@@ -18,6 +18,7 @@ public class battleManager : MonoBehaviour
     public characterControl currentCharacter;
     public List<characterControl> friendlyCharacters = new List<characterControl>();
 
+    private bool turnInProgress = false;
 
     private void Awake()
     {
@@ -31,11 +32,8 @@ public class battleManager : MonoBehaviour
 
     private IEnumerator StartBattleCoroutine()
     {
+        // Wacht één frame zodat alle characterControl.Start() klaar zijn
         yield return null;
-
-        friendlyCharacters = allCharacters.FindAll(
-            x => x.CharacterData.characterType == CharacterType.Player
-        );
 
         GenerateTurnOrder();
         NextTurn();
@@ -53,10 +51,21 @@ public class battleManager : MonoBehaviour
 
     public void NextTurn()
     {
+        foreach (var c in allCharacters)
+        {
+            if (c != null && c.turnIndicator != null)
+                c.turnIndicator.SetActive(false);
+        }
+
+        if (currentCharacter != null && currentCharacter.turnIndicator != null)
+            currentCharacter.turnIndicator.SetActive(true);
+
         currentCharacter = turnOrder.Dequeue();
+        currentCharacter.turnIndicator.SetActive(true);
 
         if (!currentCharacter.CharacterData.IsAlive)
         {
+            currentCharacter.turnIndicator.SetActive(true);
             NextTurn();
             return;
         }
@@ -118,14 +127,11 @@ public class battleManager : MonoBehaviour
         // Check: mag dit target geraakt worden?
         if (!selectedAbility.validTargetPositions.Contains(targetData.position))
         {
-<<<<<<< Updated upstream
             Debug.Log("Invalid target position!");
             return;
-=======
-            AttackCameraController.Instance.PlayAttackByIndex(2, 1);
-            
->>>>>>> Stashed changes
         }
+
+        AttackCameraController.Instance.PlayAttackByIndex(2, 1);
 
         attacker._target = targetData;
         attacker.Attack(selectedAbility);
@@ -135,39 +141,35 @@ public class battleManager : MonoBehaviour
 
     private IEnumerator EnemyTurn()
     {
-        // Kleine delay zodat het leesbaar is
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.5f); // kleine denkpauze
 
-        var enemyData = currentCharacter.CharacterData;
+        var enemy = currentCharacter.CharacterData;
 
-        // Kies ability
-        abilityData ability = enemyData.basicAttack;
+        // Kies ability (voor nu gewoon eerste)
+        abilityData chosenAbility = enemy.Abilities[0];
 
-        // Kies random levende player
-        var targets = allCharacters.FindAll(x =>
-            x.CharacterData.characterType == CharacterType.Player &&
-            x.CharacterData.IsAlive);
+        // Zoek levende player targets
+        List<characterControl> possibleTargets = allCharacters.FindAll(c =>
+            c.CharacterData.characterType == CharacterType.Player &&
+            c.CharacterData.IsAlive
+        );
 
-        if (targets.Count == 0)
-            yield break;
-
-        var target = targets[Random.Range(0, targets.Count)];
-
-<<<<<<< Updated upstream
-=======
-        turnInProgress = true;
-
-        if (AttackCameraController.Instance != null)
+        if (possibleTargets.Count == 0)
         {
-            AttackCameraController.Instance.PlayAttackByIndex(2, 1);
-            
+            Debug.Log("All players dead!");
+            yield break;
         }
 
->>>>>>> Stashed changes
-        enemyData._target = target.CharacterData;
-        enemyData.Attack(ability);
+        // Kies random target
+        characterControl target = possibleTargets[Random.Range(0, possibleTargets.Count)];
 
-        Debug.Log($"{enemyData.CharacterName} gebruikt {ability.abilityName} op {target.CharacterData.CharacterName}");
+        // Zet target
+        enemy._target = target.CharacterData;
+
+        // Voer attack uit
+        enemy.Attack(chosenAbility);
+
+        Debug.Log(enemy.CharacterName + " attacks " + target.CharacterData.CharacterName);
 
         yield return new WaitForSeconds(0.5f);
 
