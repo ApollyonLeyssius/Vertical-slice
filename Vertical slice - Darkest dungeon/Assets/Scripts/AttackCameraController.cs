@@ -146,14 +146,18 @@ public class AttackCameraController : MonoBehaviour
     )
     {
         DisableNonParticipants(allyIndex, enemyIndex);
-        BeginAttackSprites(allyIndex, enemyIndex);
+
+        Transform attackerMove = GetMoveTransformForAlly(allyIndex, attacker);
+        Transform targetMove = GetMoveTransformForEnemy(enemyIndex, target);
+
+        baseAttackerPos = attackerMove.localPosition;
+        baseTargetPos = targetMove.localPosition;
+
+        BeginAttackSprites(allyIndex, enemyIndex, attacker, target, attackerMove, targetMove);
         StartFade(false);
         StartBlur(true);
 
         Vector3 dir = GetAttackDirection(attacker, target);
-
-        baseAttackerPos = attacker.localPosition;
-        baseTargetPos = target.localPosition;
 
         Vector3 camAttackPos = baseCamPos + dir * camLungeX;
         Quaternion camAttackRot = Quaternion.Euler(0f, 0f, -dir.x * camRotation);
@@ -167,9 +171,9 @@ public class AttackCameraController : MonoBehaviour
         yield return LerpAttack(
             camAttackPos,
             camAttackRot,
-            attacker,
+            attackerMove,
             attackerAttackPos,
-            target,
+            targetMove,
             targetHitPos,
             maxAttackFOV,
             camLungeTime
@@ -194,9 +198,9 @@ public class AttackCameraController : MonoBehaviour
         yield return LerpAttack(
             baseCamPos,
             baseCamRot,
-            attacker,
+            attackerMove,
             baseAttackerPos,
-            target,
+            targetMove,
             baseTargetPos,
             baseFOV,
             camReturnTime
@@ -206,13 +210,33 @@ public class AttackCameraController : MonoBehaviour
         transform.localRotation = baseCamRot;
         cam.fieldOfView = baseFOV;
 
-        attacker.localPosition = baseAttackerPos;
-        target.localPosition = baseTargetPos;
+        attackerMove.localPosition = baseAttackerPos;
+        targetMove.localPosition = baseTargetPos;
 
         EndAttackSprites(allyIndex, enemyIndex);
         StartFade(true);
         StartBlur(false);
         EnableAllCharacters();
+    }
+
+    Transform GetMoveTransformForAlly(int allyIndex, Transform fallback)
+    {
+        if (allyIndex >= 0 && allyIndex < allyAttackSprites.Count)
+        {
+            GameObject atk = allyAttackSprites[allyIndex];
+            if (atk) return atk.transform;
+        }
+        return fallback;
+    }
+
+    Transform GetMoveTransformForEnemy(int enemyIndex, Transform fallback)
+    {
+        if (enemyIndex >= 0 && enemyIndex < enemyHitSprites.Count)
+        {
+            GameObject hit = enemyHitSprites[enemyIndex];
+            if (hit) return hit.transform;
+        }
+        return fallback;
     }
 
     void DisableNonParticipants(int allyIndex, int enemyIndex)
@@ -235,22 +259,45 @@ public class AttackCameraController : MonoBehaviour
             if (e) e.SetActive(true);
     }
 
-    void BeginAttackSprites(int allyIndex, int enemyIndex)
+    void BeginAttackSprites(int allyIndex, int enemyIndex, Transform attacker, Transform target, Transform attackerMove, Transform targetMove)
     {
-        SetActiveSafe(allyIdleSprites, allyIndex, false);
-        SetActiveSafe(allyAttackSprites, allyIndex, true);
+        GameObject allyAttack = (allyIndex >= 0 && allyIndex < allyAttackSprites.Count) ? allyAttackSprites[allyIndex] : null;
+        GameObject enemyHit = (enemyIndex >= 0 && enemyIndex < enemyHitSprites.Count) ? enemyHitSprites[enemyIndex] : null;
 
-        SetActiveSafe(enemyIdleSprites, enemyIndex, false);
-        SetActiveSafe(enemyHitSprites, enemyIndex, true);
+        if (allyAttack)
+        {
+            if (allyAttack != attacker.gameObject)
+                allyAttack.transform.localPosition = attacker.localPosition;
+
+            if (allyIndex >= 0 && allyIndex < allyIdleSprites.Count && allyIdleSprites[allyIndex] && allyIdleSprites[allyIndex] != allies[allyIndex])
+                allyIdleSprites[allyIndex].SetActive(false);
+
+            allyAttack.SetActive(true);
+        }
+
+        if (enemyHit)
+        {
+            if (enemyHit != target.gameObject)
+                enemyHit.transform.localPosition = target.localPosition;
+
+            if (enemyIndex >= 0 && enemyIndex < enemyIdleSprites.Count && enemyIdleSprites[enemyIndex] && enemyIdleSprites[enemyIndex] != enemies[enemyIndex])
+                enemyIdleSprites[enemyIndex].SetActive(false);
+
+            enemyHit.SetActive(true);
+        }
     }
 
     void EndAttackSprites(int allyIndex, int enemyIndex)
     {
         SetActiveSafe(allyAttackSprites, allyIndex, false);
-        SetActiveSafe(allyIdleSprites, allyIndex, true);
+
+        if (allyIndex >= 0 && allyIndex < allyIdleSprites.Count && allyIdleSprites[allyIndex] && allyIdleSprites[allyIndex] != allies[allyIndex])
+            allyIdleSprites[allyIndex].SetActive(true);
 
         SetActiveSafe(enemyHitSprites, enemyIndex, false);
-        SetActiveSafe(enemyIdleSprites, enemyIndex, true);
+
+        if (enemyIndex >= 0 && enemyIndex < enemyIdleSprites.Count && enemyIdleSprites[enemyIndex] && enemyIdleSprites[enemyIndex] != enemies[enemyIndex])
+            enemyIdleSprites[enemyIndex].SetActive(true);
     }
 
     void SetActiveSafe(List<GameObject> list, int index, bool value)

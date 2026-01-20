@@ -9,16 +9,13 @@ public class uiManagment : MonoBehaviour
 
     public void ShowAbilities(characterData data)
     {
-
         abilityPanel.SetActive(true);
 
-        // Oude abilities verwijderen
         foreach (Transform child in abilityUiHolder)
         {
             Destroy(child.gameObject);
         }
 
-        // Nieuwe abilities maken
         for (int i = 0; i < data.Abilities.Count; i++)
         {
             var ability = data.Abilities[i];
@@ -32,6 +29,9 @@ public class uiManagment : MonoBehaviour
 
     public void HideAbilities()
     {
-        abilityPanel.SetActive(false);
+        for (int i = 0; i < abilityUiHolder.childCount; i++)
+        {
+            abilityUiHolder.GetChild(i).gameObject.SetActive(false);
+        }
     }
 }
