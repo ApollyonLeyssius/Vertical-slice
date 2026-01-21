@@ -1533,7 +1533,7 @@ MonoBehaviour:
       maxDamage: 7
       healAmount: 0
       outputType: 0
-      usableFromPositions: 000000000100000002000000
+      usableFromPositions: 00000000010000000200000003000000
       validTargetPositions: 00000000010000000200000003000000
       abilityIcon: {fileID: -1118324893, guid: 266cf0856934f7f44835978856e0c01c, type: 3}
       targetsAll: 0
@@ -1545,7 +1545,7 @@ MonoBehaviour:
       maxDamage: 7
       healAmount: 0
       outputType: 0
-      usableFromPositions: 000000000100000002000000
+      usableFromPositions: 00000000010000000200000003000000
       validTargetPositions: 00000000010000000200000003000000
       abilityIcon: {fileID: -1118324893, guid: 266cf0856934f7f44835978856e0c01c, type: 3}
       targetsAll: 0
@@ -1557,7 +1557,7 @@ MonoBehaviour:
       maxDamage: 7
       healAmount: 0
       outputType: 0
-      usableFromPositions: 000000000100000002000000
+      usableFromPositions: 00000000010000000200000003000000
       validTargetPositions: 00000000010000000200000003000000
       abilityIcon: {fileID: -1118324893, guid: 266cf0856934f7f44835978856e0c01c, type: 3}
       targetsAll: 0
@@ -1569,7 +1569,7 @@ MonoBehaviour:
       maxDamage: 7
       healAmount: 0
       outputType: 0
-      usableFromPositions: 000000000100000002000000
+      usableFromPositions: 00000000010000000200000003000000
       validTargetPositions: 00000000010000000200000003000000
       abilityIcon: {fileID: -1118324893, guid: 266cf0856934f7f44835978856e0c01c, type: 3}
       targetsAll: 0
@@ -14879,7 +14879,67 @@ MonoBehaviour:
       healthSlider: {fileID: 132339257}
       healthText: {fileID: 1222867083}
       characterNameText: {fileID: 1458536735}
-    Abilities: []
+    Abilities:
+    - abilityName: Move
+      minDamage: 6
+      maxDamage: 7
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 000000000100000002000000
+      validTargetPositions: 00000000010000000200000003000000
+      abilityIcon: {fileID: -1118324893, guid: 266cf0856934f7f44835978856e0c01c, type: 3}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
+    - abilityName: Move
+      minDamage: 6
+      maxDamage: 7
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 000000000100000002000000
+      validTargetPositions: 00000000010000000200000003000000
+      abilityIcon: {fileID: -1118324893, guid: 266cf0856934f7f44835978856e0c01c, type: 3}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
+    - abilityName: Move
+      minDamage: 6
+      maxDamage: 7
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 000000000100000002000000
+      validTargetPositions: 00000000010000000200000003000000
+      abilityIcon: {fileID: -1118324893, guid: 266cf0856934f7f44835978856e0c01c, type: 3}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
+    - abilityName: Move
+      minDamage: 6
+      maxDamage: 7
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 000000000100000002000000
+      validTargetPositions: 00000000010000000200000003000000
+      abilityIcon: {fileID: -1118324893, guid: 266cf0856934f7f44835978856e0c01c, type: 3}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
+    - abilityName: Move
+      minDamage: 6
+      maxDamage: 7
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 000000000100000002000000
+      validTargetPositions: 00000000010000000200000003000000
+      abilityIcon: {fileID: -1118324893, guid: 266cf0856934f7f44835978856e0c01c, type: 3}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
     basicAttack:
       abilityName: 
       minDamage: 3
