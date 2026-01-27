@@ -1,5 +1,7 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 
 public class characterControl : MonoBehaviour, IPointerClickHandler
@@ -10,11 +12,21 @@ public class characterControl : MonoBehaviour, IPointerClickHandler
     public Coroutine AttackQueue;
     public Coroutine Enemybehaviour;
 
+    public Transform damagePopupPoint;
+    public GameObject damagePopupPrefab;
+
+    public GameObject turnIndicator;
+
     private void Awake()
     {
         CharacterData._charCont = this;
     }
 
+    public void ShowDamagePopup(int amount)
+    {
+        var go = Instantiate(damagePopupPrefab, damagePopupPoint.position, Quaternion.identity, damagePopupPoint);
+        go.GetComponent<DamagePopup>().Setup(amount);
+    }
     private void Start()
     {
         CharacterData.Init();

@@ -7,12 +7,10 @@ public class abilityUI : MonoBehaviour, IPointerDownHandler
 {
     public int abilityIndex;
 
-    [SerializeField] private TextMeshProUGUI abilityName;
     [SerializeField] private Image abilityIcon;
 
     public void init(abilityData data)
     {
-        abilityName.text = data.abilityName;
         abilityIcon.sprite = data.abilityIcon;
     }
 

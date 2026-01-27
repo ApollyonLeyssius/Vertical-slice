@@ -1,44 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using Unity.VisualScripting;
-using System.Runtime.CompilerServices;
 
-// this script needs box collider2D
+// Needs a Collider2D on this object (and an EventSystem is NOT required for OnMouse...).
 [RequireComponent(typeof(BoxCollider2D))]
 public class HoverMenu : MonoBehaviour
 {
     [SerializeField] private GameObject menu;
 
-    [SerializeField] private Animator anim;
-
-    private void Start()
+    private void Awake()
     {
+        if (menu != null) menu.SetActive(false); // start hidden
     }
 
-    private void OnMouseOver()
+    private void OnMouseEnter()
     {
-        // checks if its off
-        if (!menu.activeSelf)
-        {
-            // turns on
-            anim.SetTrigger("TurningOn");
-            menu.SetActive(true);
-            Debug.Log("menu turned on");
-        }
+        if (menu != null) menu.SetActive(true);
     }
 
     private void OnMouseExit()
     {
-        // checks if its on
-        if (menu.activeSelf)
-        {
-            // turns off
-            anim.SetTrigger("TurningOff");
-            menu.SetActive(false);
-
-            Debug.Log("menu turned off");
-        }
+        if (menu != null) menu.SetActive(false);
     }
 }

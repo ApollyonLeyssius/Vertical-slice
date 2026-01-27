@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -95,7 +95,259 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Equipment selected and unselected_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 450
+        width: 218
+        height: 427
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42ded1f156b4dad419b58ad64d9f9f1f
+      internalID: -809769432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Equipment selected and unselected_1
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 451
+        width: 218
+        height: 426
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf7980bfe1fe0ef4b86263d194fe3a59
+      internalID: -641282521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Equipment selected and unselected_2
+      rect:
+        serializedVersion: 2
+        x: 488
+        y: 451
+        width: 218
+        height: 426
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f839f864eacb6940b5362b2ff8410fb
+      internalID: -1897221605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Equipment selected and unselected_3
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 450
+        width: 218
+        height: 427
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86bd10fc0a33d7e47b786d1a89edac6c
+      internalID: 390395755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Equipment selected and unselected_4
+      rect:
+        serializedVersion: 2
+        x: 1046
+        y: 451
+        width: 218
+        height: 426
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eee5e11655aa9644991cfb77d5285284
+      internalID: 12218939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Equipment selected and unselected_5
+      rect:
+        serializedVersion: 2
+        x: 1290
+        y: 451
+        width: 218
+        height: 426
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b5ad6b4cab09264eb32844ac964dd87
+      internalID: 548323778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Equipment selected and unselected_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 218
+        height: 426
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03d7215ca9cd5ed4e830ff39f5d94cf8
+      internalID: -1313181661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Equipment selected and unselected_7
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 0
+        width: 219
+        height: 426
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5dee81be4186e641a3396803b08d7cf
+      internalID: -1626036079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Equipment selected and unselected_8
+      rect:
+        serializedVersion: 2
+        x: 487
+        y: 0
+        width: 219
+        height: 426
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: add775ba4452cd14382df119cafcb1b4
+      internalID: -439983083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Equipment selected and unselected_9
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 0
+        width: 218
+        height: 426
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f37f85d4587f1954287ada8b6984cdd2
+      internalID: -1838438758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Equipment selected and unselected_10
+      rect:
+        serializedVersion: 2
+        x: 1045
+        y: 0
+        width: 219
+        height: 426
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71dc1aaaf88b65446828680e975fa89b
+      internalID: -1207570093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Equipment selected and unselected_11
+      rect:
+        serializedVersion: 2
+        x: 1289
+        y: 0
+        width: 219
+        height: 426
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 987b7999593413946b74a71179477ff1
+      internalID: 997621577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -106,7 +358,19 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Equipment selected and unselected_0: -809769432
+      Equipment selected and unselected_1: -641282521
+      Equipment selected and unselected_10: -1207570093
+      Equipment selected and unselected_11: 997621577
+      Equipment selected and unselected_2: -1897221605
+      Equipment selected and unselected_3: 390395755
+      Equipment selected and unselected_4: 12218939
+      Equipment selected and unselected_5: 548323778
+      Equipment selected and unselected_6: -1313181661
+      Equipment selected and unselected_7: -1626036079
+      Equipment selected and unselected_8: -439983083
+      Equipment selected and unselected_9: -1838438758
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

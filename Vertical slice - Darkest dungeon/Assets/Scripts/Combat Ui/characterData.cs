@@ -125,14 +125,18 @@ public class characterData
         }
     }
 
-    public void WasDamaged(int damage)
+    public void WasDamaged(int amount)
     {
-        CurrentHealth -= damage;
+        CurrentHealth -= amount;
 
         if (CurrentHealth <= 0)
         {
             CurrentHealth = 0;
             characterState = CharacterState.Died;
+        }
+        if (_charCont != null)
+        {
+            _charCont.ShowDamagePopup(amount);
         }
 
         if (characterType == CharacterType.Player)
@@ -145,7 +149,6 @@ public class characterData
         }
 
         OnWasAttacked?.Invoke();
-
     }
 
     private void CharacterAttack()
