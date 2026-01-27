@@ -20,7 +20,7 @@ public class combattest : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            AttackCameraController.Instance.PlayAttackByIndex(0, 2);
+            AttackCameraController.Instance.PlayAttackByIndex(3, 2);
 
         }
     }

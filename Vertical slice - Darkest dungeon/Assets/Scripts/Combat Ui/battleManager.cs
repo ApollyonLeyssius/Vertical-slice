@@ -32,20 +32,23 @@ public class battleManager : MonoBehaviour
 
     private IEnumerator StartBattleCoroutine()
     {
-        // Wacht één frame zodat alle characterControl.Start() klaar zijn
         yield return null;
 
         GenerateTurnOrder();
         NextTurn();
     }
+
     public void GenerateTurnOrder()
     {
+        turnOrder.Clear();
+
         allCharacters.Sort((a, b) =>
             b.CharacterData.CharacterSpeed.CompareTo(a.CharacterData.CharacterSpeed));
 
         foreach (var c in allCharacters)
         {
-            turnOrder.Enqueue(c);
+            if (c != null)
+                turnOrder.Enqueue(c);
         }
     }
 
@@ -57,18 +60,21 @@ public class battleManager : MonoBehaviour
                 c.turnIndicator.SetActive(false);
         }
 
-        if (currentCharacter != null && currentCharacter.turnIndicator != null)
-            currentCharacter.turnIndicator.SetActive(true);
+        if (turnOrder.Count == 0)
+            GenerateTurnOrder();
 
         currentCharacter = turnOrder.Dequeue();
-        currentCharacter.turnIndicator.SetActive(true);
 
-        if (!currentCharacter.CharacterData.IsAlive)
+        while (currentCharacter != null && !currentCharacter.CharacterData.IsAlive)
         {
-            currentCharacter.turnIndicator.SetActive(true);
-            NextTurn();
-            return;
+            if (turnOrder.Count == 0)
+                GenerateTurnOrder();
+
+            currentCharacter = turnOrder.Dequeue();
         }
+
+        if (currentCharacter != null && currentCharacter.turnIndicator != null)
+            currentCharacter.turnIndicator.SetActive(true);
 
         currentCharacter.CharacterData.characterState = CharacterState.Ready;
 
@@ -81,15 +87,13 @@ public class battleManager : MonoBehaviour
 
             uiManager.ShowAbilities(currentCharacter.CharacterData);
         }
-        else 
+        else
         {
             uiManager.HideAbilities();
             waitingForTarget = false;
 
             StartCoroutine(EnemyTurn());
         }
-
-        turnOrder.Enqueue(currentCharacter);
     }
 
     public void DoBasicAttackFromButton()
@@ -109,7 +113,6 @@ public class battleManager : MonoBehaviour
         var data = currentCharacter.CharacterData;
         var ability = data.Abilities[index];
 
-        // Check: mag deze ability vanaf deze positie?
         if (!ability.usableFromPositions.Contains(data.position))
         {
             Debug.Log("Ability cannot be used from this position!");
@@ -119,36 +122,80 @@ public class battleManager : MonoBehaviour
         selectedAbility = ability;
         waitingForTarget = true;
     }
+
+    void TryPlayAttackCamera(characterData attacker, characterData target)
+    {
+        if (AttackCameraController.Instance == null) return;
+        if (attacker == null || target == null) return;
+
+        if (attacker.characterType == CharacterType.Player && target.characterType == CharacterType.Enemy)
+        {
+            int allyIndex = attacker.position;
+            int enemyIndex = target.position;
+            if (allyIndex < 0 || allyIndex > 3) return;
+            if (enemyIndex < 0 || enemyIndex > 3) return;
+            AttackCameraController.Instance.PlayAttackByIndex(allyIndex, enemyIndex);
+            return;
+        }
+
+        if (attacker.characterType == CharacterType.Enemy && target.characterType == CharacterType.Player)
+        {
+            int enemyIndex = attacker.position;
+            int allyIndex = target.position;
+            if (allyIndex < 0 || allyIndex > 3) return;
+            if (enemyIndex < 0 || enemyIndex > 3) return;
+            AttackCameraController.Instance.PlayEnemyAttackByIndex(enemyIndex, allyIndex);
+            return;
+        }
+    }
+
+    IEnumerator WaitForCameraIfNeeded()
+    {
+        if (AttackCameraController.Instance == null)
+            yield break;
+
+        while (AttackCameraController.Instance.IsAttacking)
+            yield return null;
+    }
+
     public void TargetSelected(characterControl target)
     {
         var attacker = currentCharacter.CharacterData;
         var targetData = target.CharacterData;
 
-        // Check: mag dit target geraakt worden?
+        if (selectedAbility == null)
+            return;
+
         if (!selectedAbility.validTargetPositions.Contains(targetData.position))
         {
             Debug.Log("Invalid target position!");
             return;
         }
 
-        AttackCameraController.Instance.PlayAttackByIndex(2, 1);
+        waitingForTarget = false;
+
+        TryPlayAttackCamera(attacker, targetData);
 
         attacker._target = targetData;
         attacker.Attack(selectedAbility);
 
+        StartCoroutine(EndTurnAfterCamera());
+    }
+
+    IEnumerator EndTurnAfterCamera()
+    {
+        yield return WaitForCameraIfNeeded();
         NextTurn();
     }
 
     private IEnumerator EnemyTurn()
     {
-        yield return new WaitForSeconds(0.5f); // kleine denkpauze
+        yield return new WaitForSeconds(0.5f);
 
         var enemy = currentCharacter.CharacterData;
 
-        // Kies ability (voor nu gewoon eerste)
         abilityData chosenAbility = enemy.Abilities[0];
 
-        // Zoek levende player targets
         List<characterControl> possibleTargets = allCharacters.FindAll(c =>
             c.CharacterData.characterType == CharacterType.Player &&
             c.CharacterData.IsAlive
@@ -160,20 +207,20 @@ public class battleManager : MonoBehaviour
             yield break;
         }
 
-        // Kies random target
         characterControl target = possibleTargets[Random.Range(0, possibleTargets.Count)];
 
-        // Zet target
         enemy._target = target.CharacterData;
 
-        // Voer attack uit
+        TryPlayAttackCamera(enemy, target.CharacterData);
+
         enemy.Attack(chosenAbility);
 
         Debug.Log(enemy.CharacterName + " attacks " + target.CharacterData.CharacterName);
+
+        yield return WaitForCameraIfNeeded();
 
         yield return new WaitForSeconds(0.5f);
 
         NextTurn();
     }
-
 }
