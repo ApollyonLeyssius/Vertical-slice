@@ -79,6 +79,7 @@ public class AttackCameraController : MonoBehaviour
 
     void Awake()
     {
+            
         Instance = this;
         cam = GetComponent<Camera>();
 
