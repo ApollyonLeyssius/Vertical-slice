@@ -138,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &15680401
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1178,7 +1178,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &152714750
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7124,8 +7124,8 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 1
-  m_CellSize: {x: 1, y: 1}
-  m_Spacing: {x: 1, y: 0}
+  m_CellSize: {x: 0.75, y: 0.75}
+  m_Spacing: {x: -0.02, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!224 &1121120574
@@ -7144,7 +7144,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -17.864374, y: -20.01558}
+  m_AnchoredPosition: {x: -24, y: -25}
   m_SizeDelta: {x: 3.1692, y: 0.8427}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1140269414
@@ -7274,7 +7274,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1178036214
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9002,7 +9002,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1387808981
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12027,7 +12027,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1930632334
 SpriteRenderer:
   m_ObjectHideFlags: 0
