@@ -1,5 +1,7 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 
 public class characterControl : MonoBehaviour, IPointerClickHandler
@@ -19,6 +21,7 @@ public class characterControl : MonoBehaviour, IPointerClickHandler
     {
         CharacterData._charCont = this;
     }
+
     public void ShowDamagePopup(int amount)
     {
         var go = Instantiate(damagePopupPrefab, damagePopupPoint.position, Quaternion.identity, damagePopupPoint);
