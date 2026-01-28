@@ -485,6 +485,117 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!61 &73635263
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73635260}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 9.68}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10, y: 19.64}
+  m_EdgeRadius: 0
+--- !u!114 &73635264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73635260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f3a0f99aa3f5114db855bbac6e8fae9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharacterData:
+    CharacterName: Skelton
+    maxCharacterHealth: 21
+    CurrentHealth: 21
+    position: 0
+    MaxStress: 0
+    CurrentStress: 0
+    CharacterSpeed: 5
+    CurrentSpeed: 5
+    Facial: {fileID: 0}
+    characterState: 0
+    characterType: 1
+    CharUI:
+      healthSlider: {fileID: 1073329111}
+      healthText: {fileID: 1222867083}
+      characterNameText: {fileID: 1458536735}
+    Abilities:
+    - abilityName: basic
+      minDamage: 4
+      maxDamage: 5
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 00000000010000000200000003000000
+      validTargetPositions: 00000000010000000200000003000000
+      abilityIcon: {fileID: 0}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
+    basicAttack:
+      abilityName: 
+      minDamage: 3
+      maxDamage: 7
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 00000000010000000200000003000000
+      validTargetPositions: 00000000010000000200000003000000
+      abilityIcon: {fileID: 0}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 5
+      critMultiplier: 1.5
+    _charCont: {fileID: 0}
+    OnAttack:
+      m_PersistentCalls:
+        m_Calls: []
+    OnWasAttacked:
+      m_PersistentCalls:
+        m_Calls: []
+    PlayerJustAttacked: 0
+  targetData: {fileID: 0}
+  damagePopupPoint: {fileID: 1606104012}
+  damagePopupPrefab: {fileID: 1365628279}
+  turnIndicator: {fileID: 549610883}
 --- !u!1 &73983201
 GameObject:
   m_ObjectHideFlags: 0
@@ -904,7 +1015,7 @@ MonoBehaviour:
     characterState: 0
     characterType: 0
     CharUI:
-      healthSlider: {fileID: 0}
+      healthSlider: {fileID: 1477728795}
       healthText: {fileID: 1222867083}
       characterNameText: {fileID: 1458536735}
     Abilities:
@@ -2759,7 +2870,7 @@ MonoBehaviour:
     characterState: 0
     characterType: 0
     CharUI:
-      healthSlider: {fileID: 0}
+      healthSlider: {fileID: 1642242876}
       healthText: {fileID: 1222867083}
       characterNameText: {fileID: 1458536735}
     Abilities:
@@ -4776,6 +4887,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: fb547b36829f85247a6eb7e0da4023bc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 73635262}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: fb547b36829f85247a6eb7e0da4023bc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 73635264}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: fb547b36829f85247a6eb7e0da4023bc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 73635263}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: fb547b36829f85247a6eb7e0da4023bc, type: 3}
 --- !u!1 &828246899
 GameObject:
@@ -6076,6 +6193,117 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!61 &1086519037
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086519032}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 4.13, y: 10.2}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10, y: 20.5}
+  m_EdgeRadius: 0
+--- !u!114 &1086519038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086519032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f3a0f99aa3f5114db855bbac6e8fae9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharacterData:
+    CharacterName: Skelton
+    maxCharacterHealth: 21
+    CurrentHealth: 21
+    position: 0
+    MaxStress: 0
+    CurrentStress: 0
+    CharacterSpeed: 5
+    CurrentSpeed: 5
+    Facial: {fileID: 0}
+    characterState: 0
+    characterType: 1
+    CharUI:
+      healthSlider: {fileID: 1987942564}
+      healthText: {fileID: 1222867083}
+      characterNameText: {fileID: 1458536735}
+    Abilities:
+    - abilityName: basic
+      minDamage: 4
+      maxDamage: 5
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 00000000010000000200000003000000
+      validTargetPositions: 00000000010000000200000003000000
+      abilityIcon: {fileID: 0}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 0
+      critMultiplier: 0
+    basicAttack:
+      abilityName: 
+      minDamage: 3
+      maxDamage: 7
+      healAmount: 0
+      outputType: 0
+      usableFromPositions: 00000000010000000200000003000000
+      validTargetPositions: 00000000010000000200000003000000
+      abilityIcon: {fileID: 0}
+      targetsAll: 0
+      targetsSelf: 0
+      critChance: 5
+      critMultiplier: 1.5
+    _charCont: {fileID: 0}
+    OnAttack:
+      m_PersistentCalls:
+        m_Calls: []
+    OnWasAttacked:
+      m_PersistentCalls:
+        m_Calls: []
+    PlayerJustAttacked: 0
+  targetData: {fileID: 0}
+  damagePopupPoint: {fileID: 1606104012}
+  damagePopupPrefab: {fileID: 1365628279}
+  turnIndicator: {fileID: 549610883}
 --- !u!1 &1087542570
 GameObject:
   m_ObjectHideFlags: 0
@@ -6426,6 +6654,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7178930448252390117, guid: 93c5c53737d58c9448ce67a9887c8bca, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1086519035}
+    - targetCorrespondingSourceObject: {fileID: 7178930448252390117, guid: 93c5c53737d58c9448ce67a9887c8bca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1086519038}
+    - targetCorrespondingSourceObject: {fileID: 7178930448252390117, guid: 93c5c53737d58c9448ce67a9887c8bca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1086519037}
   m_SourcePrefab: {fileID: 100100000, guid: 93c5c53737d58c9448ce67a9887c8bca, type: 3}
 --- !u!1001 &1215547116
 PrefabInstance:
@@ -9783,7 +10017,7 @@ MonoBehaviour:
     characterState: 0
     characterType: 0
     CharUI:
-      healthSlider: {fileID: 0}
+      healthSlider: {fileID: 828246901}
       healthText: {fileID: 1222867083}
       characterNameText: {fileID: 1458536735}
     Abilities:
@@ -11191,7 +11425,7 @@ MonoBehaviour:
     characterState: 0
     characterType: 1
     CharUI:
-      healthSlider: {fileID: 0}
+      healthSlider: {fileID: 804036753}
       healthText: {fileID: 1222867083}
       characterNameText: {fileID: 1458536735}
     Abilities:
@@ -11807,7 +12041,7 @@ MonoBehaviour:
     characterState: 0
     characterType: 0
     CharUI:
-      healthSlider: {fileID: 0}
+      healthSlider: {fileID: 1929639742}
       healthText: {fileID: 1222867083}
       characterNameText: {fileID: 1458536735}
     Abilities:
