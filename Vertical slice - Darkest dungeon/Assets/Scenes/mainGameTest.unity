@@ -914,6 +914,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 56c21a42e6d1adb44b735dfe650f20e0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1876069460}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 56c21a42e6d1adb44b735dfe650f20e0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1876069462}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: 56c21a42e6d1adb44b735dfe650f20e0, type: 3}
 --- !u!1 &117338160 stripped
 GameObject:
@@ -3354,6 +3357,7 @@ RectTransform:
   - {fileID: 1929639741}
   - {fileID: 828246900}
   - {fileID: 1477728794}
+  - {fileID: 1121120574}
   m_Father: {fileID: 1926004373}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -7132,15 +7136,15 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1121120572}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -839.90607}
+  m_LocalScale: {x: 9.353074, y: 9.353074, z: 9.353074}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 444515017}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.03, y: -2.14}
+  m_AnchoredPosition: {x: -17.864374, y: -20.01558}
   m_SizeDelta: {x: 3.1692, y: 0.8427}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1140269414
@@ -11485,6 +11489,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -7552582706839291426, guid: 56c21a42e6d1adb44b735dfe650f20e0, type: 3}
   m_PrefabInstance: {fileID: 111954321}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1876069462
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876069458}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d970389329750bc46a51445c30b56a78, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1887336254
 GameObject:
   m_ObjectHideFlags: 0
@@ -14089,4 +14114,3 @@ SceneRoots:
   - {fileID: 400021954}
   - {fileID: 483093223}
   - {fileID: 1058053772}
-  - {fileID: 1121120574}
