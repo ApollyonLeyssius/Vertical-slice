@@ -4722,66 +4722,6 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &749097079
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 749097080}
-  - component: {fileID: 749097081}
-  m_Layer: 0
-  m_Name: Ability holder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &749097080
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 749097079}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 991077266}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6.9, y: 3.1}
-  m_SizeDelta: {x: 17.1849, y: 17.1849}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &749097081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 749097079}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_StartCorner: 0
-  m_StartAxis: 1
-  m_CellSize: {x: 80, y: 80}
-  m_Spacing: {x: -1, y: 0}
-  m_Constraint: 0
-  m_ConstraintCount: 2
 --- !u!1 &760788173
 GameObject:
   m_ObjectHideFlags: 0
@@ -6564,7 +6504,6 @@ Transform:
   m_Children:
   - {fileID: 2070514570}
   - {fileID: 2032342215}
-  - {fileID: 749097080}
   m_Father: {fileID: 1926004373}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1001011052
@@ -6808,7 +6747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1926004372}
-  target: {fileID: 1540151316}
+  target: {fileID: 0}
   canvas: {fileID: 444515016}
   depth: 10
   invert: 0
@@ -6825,6 +6764,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a058458dd77a3704fac8520b1d157093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
 --- !u!1001 &1058053772
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7016,6 +6956,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+=======
+>>>>>>> Stashed changes
 --- !u!1 &1086519032 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7178930448252390117, guid: 93c5c53737d58c9448ce67a9887c8bca, type: 3}
@@ -7403,8 +7345,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b60fb34b9eb4cc644996a99596969af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
   abilityUiHolder: {fileID: 1121120574}
   abilityUiPrefab: {fileID: 1540151304}
+=======
+  abilityUiHolder: {fileID: 0}
+  abilityUiPrefab: {fileID: 0}
+>>>>>>> Stashed changes
   abilityPanel: {fileID: 1254252761}
 --- !u!4 &1189232894
 Transform:
@@ -10214,27 +10161,6 @@ Transform:
   - {fileID: 143051173}
   m_Father: {fileID: 1804958116}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1540151304 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3960821924593374031, guid: 1f44533e8e5482d469a0672b727b954a, type: 3}
-  m_PrefabInstance: {fileID: 1058053772}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1540151312 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3225289261881199997, guid: 1f44533e8e5482d469a0672b727b954a, type: 3}
-  m_PrefabInstance: {fileID: 1058053772}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1540151304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!224 &1540151316 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6994551678745855605, guid: 1f44533e8e5482d469a0672b727b954a, type: 3}
-  m_PrefabInstance: {fileID: 1058053772}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1547371194
 GameObject:
   m_ObjectHideFlags: 0
@@ -14088,5 +14014,8 @@ SceneRoots:
   - {fileID: 168017568}
   - {fileID: 400021954}
   - {fileID: 483093223}
+<<<<<<< Updated upstream
   - {fileID: 1058053772}
   - {fileID: 1121120574}
+=======
+>>>>>>> Stashed changes
