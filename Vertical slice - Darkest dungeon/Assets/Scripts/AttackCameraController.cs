@@ -21,6 +21,10 @@ public class AttackCameraController : MonoBehaviour
     [SerializeField] float shakeStrength = 0.05f;
     [SerializeField] float shakeTime = 0.06f;
 
+    [SerializeField] float orbitSideX = 0.06f;
+    [SerializeField] float orbitForwardZ = -0.06f;
+    [SerializeField] float orbitLookStrength = 1f;
+
     [SerializeField] Transform characterLayer;
     [SerializeField] float globalCharPullX = 0.05f;
     [SerializeField] float globalCharPullZ = -0.25f;
@@ -51,6 +55,7 @@ public class AttackCameraController : MonoBehaviour
     {
         public CanvasGroup canvas;
         public SpriteRenderer sprite;
+        public SpriteGroupFade group;
         public float originalAlpha;
     }
 
@@ -67,6 +72,10 @@ public class AttackCameraController : MonoBehaviour
     Coroutine routine;
     Coroutine fadeRoutine;
     Coroutine blurRoutine;
+
+    readonly List<Coroutine> groupFadeRoutines = new List<Coroutine>();
+
+    Vector3 currentDir = Vector3.right;
 
     void Awake()
     {
@@ -94,6 +103,19 @@ public class AttackCameraController : MonoBehaviour
         {
             if (!go) continue;
 
+            SpriteGroupFade sgf = go.GetComponent<SpriteGroupFade>();
+            if (sgf)
+            {
+                fadeTargets.Add(new FadeTarget
+                {
+                    canvas = null,
+                    sprite = null,
+                    group = sgf,
+                    originalAlpha = GetGroupAlpha(sgf)
+                });
+                continue;
+            }
+
             CanvasGroup cg = go.GetComponent<CanvasGroup>();
             if (cg)
             {
@@ -101,6 +123,7 @@ public class AttackCameraController : MonoBehaviour
                 {
                     canvas = cg,
                     sprite = null,
+                    group = null,
                     originalAlpha = cg.alpha
                 });
                 continue;
@@ -113,10 +136,19 @@ public class AttackCameraController : MonoBehaviour
                 {
                     canvas = null,
                     sprite = sr,
+                    group = null,
                     originalAlpha = sr.color.a
                 });
             }
         }
+    }
+
+    float GetGroupAlpha(SpriteGroupFade group)
+    {
+        if (!group) return 1f;
+        var srs = group.GetComponentsInChildren<SpriteRenderer>(true);
+        if (srs != null && srs.Length > 0) return srs[0].color.a;
+        return 1f;
     }
 
     public void PlayAttackByIndex(int allyIndex, int enemyIndex)
@@ -182,6 +214,7 @@ public class AttackCameraController : MonoBehaviour
         Vector3 startTargetPos = targetMove.localPosition;
 
         Vector3 dir = GetAttackDirection(attacker, target);
+        currentDir = dir;
 
         Vector3 camAttackPos = baseCamPos + dir * camLungeX;
         Quaternion camAttackRot = Quaternion.Euler(0f, 0f, -dir.x * camRotation);
@@ -200,7 +233,9 @@ public class AttackCameraController : MonoBehaviour
             targetMove,
             targetHitPos,
             maxAttackFOV,
-            camLungeTime
+            camLungeTime,
+            true,
+            attacker
         );
 
         float t = 0f;
@@ -227,7 +262,9 @@ public class AttackCameraController : MonoBehaviour
             targetMove,
             startTargetPos,
             baseFOV,
-            camReturnTime
+            camReturnTime,
+            false,
+            attacker
         );
 
         transform.localPosition = baseCamPos;
@@ -263,6 +300,7 @@ public class AttackCameraController : MonoBehaviour
         Vector3 startTargetPos = target.localPosition;
 
         Vector3 dir = GetAttackDirection(attacker, target);
+        currentDir = dir;
 
         Vector3 camAttackPos = baseCamPos + dir * camLungeX;
         Quaternion camAttackRot = Quaternion.Euler(0f, 0f, -dir.x * camRotation);
@@ -281,7 +319,9 @@ public class AttackCameraController : MonoBehaviour
             target,
             targetHitPos,
             maxAttackFOV,
-            camLungeTime
+            camLungeTime,
+            true,
+            attacker
         );
 
         float t = 0f;
@@ -308,7 +348,9 @@ public class AttackCameraController : MonoBehaviour
             target,
             startTargetPos,
             baseFOV,
-            camReturnTime
+            camReturnTime,
+            false,
+            attacker
         );
 
         transform.localPosition = baseCamPos;
@@ -411,6 +453,24 @@ public class AttackCameraController : MonoBehaviour
         if (fadeRoutine != null)
             StopCoroutine(fadeRoutine);
 
+        for (int i = 0; i < groupFadeRoutines.Count; i++)
+        {
+            if (groupFadeRoutines[i] != null)
+                StopCoroutine(groupFadeRoutines[i]);
+        }
+        groupFadeRoutines.Clear();
+
+        for (int i = 0; i < fadeTargets.Count; i++)
+        {
+            var f = fadeTargets[i];
+            if (f.group)
+            {
+                float from = GetGroupAlpha(f.group);
+                float to = restore ? f.originalAlpha : fadedAlpha;
+                groupFadeRoutines.Add(StartCoroutine(f.group.Fade(from, to, fadeTime)));
+            }
+        }
+
         fadeRoutine = StartCoroutine(FadeRoutine(restore));
     }
 
@@ -424,6 +484,8 @@ public class AttackCameraController : MonoBehaviour
 
             foreach (var f in fadeTargets)
             {
+                if (f.group) continue;
+
                 float target = restore ? f.originalAlpha : fadedAlpha;
 
                 if (f.canvas)
@@ -441,6 +503,8 @@ public class AttackCameraController : MonoBehaviour
 
         foreach (var f in fadeTargets)
         {
+            if (f.group) continue;
+
             float a = restore ? f.originalAlpha : fadedAlpha;
 
             if (f.canvas)
@@ -489,7 +553,9 @@ public class AttackCameraController : MonoBehaviour
         Transform target,
         Vector3 targetTargetPos,
         float targetFOV,
-        float time
+        float time,
+        bool useOrbit,
+        Transform orbitCenter
     )
     {
         float t = 0f;
@@ -503,10 +569,33 @@ public class AttackCameraController : MonoBehaviour
         while (t < 1f)
         {
             t += Time.deltaTime / time;
-            float e = EaseOutCubic(t);
+            float u = Mathf.Clamp01(t);
+            float e = EaseOutCubic(u);
 
-            transform.localPosition = Vector3.Lerp(camStartPos, camTargetPos, e);
-            transform.localRotation = Quaternion.Lerp(camStartRot, camTargetRot, e);
+            Vector3 camPos = Vector3.Lerp(camStartPos, camTargetPos, e);
+            Quaternion camRot = Quaternion.Lerp(camStartRot, camTargetRot, e);
+
+            if (useOrbit && orbitCenter)
+            {
+                float s = Mathf.Sin(u * Mathf.PI);
+
+                Vector3 orbitOffset = (Vector3.right * orbitSideX + Vector3.forward * orbitForwardZ) * s;
+
+                transform.localPosition = camPos;
+                Vector3 camWorld = transform.position + transform.TransformDirection(orbitOffset);
+
+                Vector3 toCenter = orbitCenter.position - camWorld;
+                float desiredYaw = Mathf.Atan2(toCenter.x, toCenter.z) * Mathf.Rad2Deg;
+                Quaternion lookYaw = Quaternion.Euler(0f, desiredYaw, 0f);
+
+                transform.position = camWorld;
+                transform.localRotation = Quaternion.Lerp(camRot, lookYaw, Mathf.Clamp01(orbitLookStrength));
+            }
+            else
+            {
+                transform.localPosition = camPos;
+                transform.localRotation = camRot;
+            }
 
             cam.fieldOfView = Mathf.MoveTowards(
                 cam.fieldOfView,
