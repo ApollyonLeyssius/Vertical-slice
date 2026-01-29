@@ -18,13 +18,13 @@ public class characterData
 
     public float CharacterSpeed;
     public float CurrentSpeed;
+    public Image Facial;
 
     public CharacterState characterState;
     public CharacterType characterType;
 
     [Space(10)]
     public characterData _target;
-
     public characterUIData CharUI;
 
     [Space(10)]

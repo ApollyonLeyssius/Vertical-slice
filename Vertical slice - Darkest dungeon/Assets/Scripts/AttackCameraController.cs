@@ -6,6 +6,8 @@ public class AttackCameraController : MonoBehaviour
 {
     public static AttackCameraController Instance;
 
+    public bool IsAttacking { get; private set; }
+
     [SerializeField] float camLungeX = 0.32f;
     [SerializeField] float camRotation = 1.2f;
     [SerializeField] float camLungeTime = 0.06f;
@@ -18,6 +20,10 @@ public class AttackCameraController : MonoBehaviour
 
     [SerializeField] float shakeStrength = 0.05f;
     [SerializeField] float shakeTime = 0.06f;
+
+    [SerializeField] float orbitSideX = 0.06f;
+    [SerializeField] float orbitForwardZ = -0.06f;
+    [SerializeField] float orbitLookStrength = 1f;
 
     [SerializeField] Transform characterLayer;
     [SerializeField] float globalCharPullX = 0.05f;
@@ -49,6 +55,7 @@ public class AttackCameraController : MonoBehaviour
     {
         public CanvasGroup canvas;
         public SpriteRenderer sprite;
+        public SpriteGroupFade group;
         public float originalAlpha;
     }
 
@@ -60,14 +67,15 @@ public class AttackCameraController : MonoBehaviour
     float baseFOV;
     Vector3 baseCharLayerPos;
 
-    Vector3 baseAttackerPos;
-    Vector3 baseTargetPos;
-
     Material backgroundMat;
 
     Coroutine routine;
     Coroutine fadeRoutine;
     Coroutine blurRoutine;
+
+    readonly List<Coroutine> groupFadeRoutines = new List<Coroutine>();
+
+    Vector3 currentDir = Vector3.right;
 
     void Awake()
     {
@@ -95,6 +103,19 @@ public class AttackCameraController : MonoBehaviour
         {
             if (!go) continue;
 
+            SpriteGroupFade sgf = go.GetComponent<SpriteGroupFade>();
+            if (sgf)
+            {
+                fadeTargets.Add(new FadeTarget
+                {
+                    canvas = null,
+                    sprite = null,
+                    group = sgf,
+                    originalAlpha = GetGroupAlpha(sgf)
+                });
+                continue;
+            }
+
             CanvasGroup cg = go.GetComponent<CanvasGroup>();
             if (cg)
             {
@@ -102,6 +123,7 @@ public class AttackCameraController : MonoBehaviour
                 {
                     canvas = cg,
                     sprite = null,
+                    group = null,
                     originalAlpha = cg.alpha
                 });
                 continue;
@@ -114,10 +136,19 @@ public class AttackCameraController : MonoBehaviour
                 {
                     canvas = null,
                     sprite = sr,
+                    group = null,
                     originalAlpha = sr.color.a
                 });
             }
         }
+    }
+
+    float GetGroupAlpha(SpriteGroupFade group)
+    {
+        if (!group) return 1f;
+        var srs = group.GetComponentsInChildren<SpriteRenderer>(true);
+        if (srs != null && srs.Length > 0) return srs[0].color.a;
+        return 1f;
     }
 
     public void PlayAttackByIndex(int allyIndex, int enemyIndex)
@@ -128,8 +159,10 @@ public class AttackCameraController : MonoBehaviour
         if (routine != null)
             StopCoroutine(routine);
 
+        IsAttacking = false;
+
         routine = StartCoroutine(
-            AttackRoutine(
+            AllyAttacksEnemyRoutine(
                 allies[allyIndex].transform,
                 enemies[enemyIndex].transform,
                 allyIndex,
@@ -138,35 +171,59 @@ public class AttackCameraController : MonoBehaviour
         );
     }
 
-    IEnumerator AttackRoutine(
+    public void PlayEnemyAttackByIndex(int enemyIndex, int allyIndex)
+    {
+        if (allyIndex < 0 || allyIndex >= allies.Count) return;
+        if (enemyIndex < 0 || enemyIndex >= enemies.Count) return;
+
+        if (routine != null)
+            StopCoroutine(routine);
+
+        IsAttacking = false;
+
+        routine = StartCoroutine(
+            EnemyAttacksAllyRoutine(
+                enemies[enemyIndex].transform,
+                allies[allyIndex].transform,
+                allyIndex,
+                enemyIndex
+            )
+        );
+    }
+
+    IEnumerator AllyAttacksEnemyRoutine(
         Transform attacker,
         Transform target,
         int allyIndex,
         int enemyIndex
     )
     {
+        IsAttacking = true;
+
         DisableNonParticipants(allyIndex, enemyIndex);
 
         Transform attackerMove = GetMoveTransformForAlly(allyIndex, attacker);
         Transform targetMove = GetMoveTransformForEnemy(enemyIndex, target);
 
-        baseAttackerPos = attackerMove.localPosition;
-        baseTargetPos = targetMove.localPosition;
+        BeginAttackSprites(allyIndex, enemyIndex);
 
-        BeginAttackSprites(allyIndex, enemyIndex, attacker, target, attackerMove, targetMove);
         StartFade(false);
         StartBlur(true);
 
+        Vector3 startAttackerPos = attackerMove.localPosition;
+        Vector3 startTargetPos = targetMove.localPosition;
+
         Vector3 dir = GetAttackDirection(attacker, target);
+        currentDir = dir;
 
         Vector3 camAttackPos = baseCamPos + dir * camLungeX;
         Quaternion camAttackRot = Quaternion.Euler(0f, 0f, -dir.x * camRotation);
 
         Vector3 attackerAttackPos =
-            baseAttackerPos + dir * attackerPullX + Vector3.forward * pairPullZ;
+            startAttackerPos + dir * attackerPullX + Vector3.forward * pairPullZ;
 
         Vector3 targetHitPos =
-            baseTargetPos - dir * targetPullX + Vector3.forward * pairPullZ;
+            startTargetPos - dir * targetPullX + Vector3.forward * pairPullZ;
 
         yield return LerpAttack(
             camAttackPos,
@@ -176,7 +233,9 @@ public class AttackCameraController : MonoBehaviour
             targetMove,
             targetHitPos,
             maxAttackFOV,
-            camLungeTime
+            camLungeTime,
+            true,
+            attacker
         );
 
         float t = 0f;
@@ -199,24 +258,113 @@ public class AttackCameraController : MonoBehaviour
             baseCamPos,
             baseCamRot,
             attackerMove,
-            baseAttackerPos,
+            startAttackerPos,
             targetMove,
-            baseTargetPos,
+            startTargetPos,
             baseFOV,
-            camReturnTime
+            camReturnTime,
+            false,
+            attacker
         );
 
         transform.localPosition = baseCamPos;
         transform.localRotation = baseCamRot;
         cam.fieldOfView = baseFOV;
 
-        attackerMove.localPosition = baseAttackerPos;
-        targetMove.localPosition = baseTargetPos;
+        attackerMove.localPosition = startAttackerPos;
+        targetMove.localPosition = startTargetPos;
 
         EndAttackSprites(allyIndex, enemyIndex);
         StartFade(true);
         StartBlur(false);
         EnableAllCharacters();
+
+        IsAttacking = false;
+    }
+
+    IEnumerator EnemyAttacksAllyRoutine(
+        Transform attacker,
+        Transform target,
+        int allyIndex,
+        int enemyIndex
+    )
+    {
+        IsAttacking = true;
+
+        DisableNonParticipants(allyIndex, enemyIndex);
+
+        StartFade(false);
+        StartBlur(true);
+
+        Vector3 startAttackerPos = attacker.localPosition;
+        Vector3 startTargetPos = target.localPosition;
+
+        Vector3 dir = GetAttackDirection(attacker, target);
+        currentDir = dir;
+
+        Vector3 camAttackPos = baseCamPos + dir * camLungeX;
+        Quaternion camAttackRot = Quaternion.Euler(0f, 0f, -dir.x * camRotation);
+
+        Vector3 attackerAttackPos =
+            startAttackerPos + dir * attackerPullX + Vector3.forward * pairPullZ;
+
+        Vector3 targetHitPos =
+            startTargetPos - dir * targetPullX + Vector3.forward * pairPullZ;
+
+        yield return LerpAttack(
+            camAttackPos,
+            camAttackRot,
+            attacker,
+            attackerAttackPos,
+            target,
+            targetHitPos,
+            maxAttackFOV,
+            camLungeTime,
+            true,
+            attacker
+        );
+
+        float t = 0f;
+        while (t < shakeTime)
+        {
+            t += Time.deltaTime;
+            transform.localPosition =
+                camAttackPos + (Vector3)Random.insideUnitCircle * shakeStrength;
+
+            cam.fieldOfView = Mathf.MoveTowards(
+                cam.fieldOfView,
+                maxAttackFOV,
+                fovInSpeed * Time.deltaTime
+            );
+
+            yield return null;
+        }
+
+        yield return LerpAttack(
+            baseCamPos,
+            baseCamRot,
+            attacker,
+            startAttackerPos,
+            target,
+            startTargetPos,
+            baseFOV,
+            camReturnTime,
+            false,
+            attacker
+        );
+
+        transform.localPosition = baseCamPos;
+        transform.localRotation = baseCamRot;
+        cam.fieldOfView = baseFOV;
+
+        attacker.localPosition = startAttackerPos;
+        target.localPosition = startTargetPos;
+
+        StartFade(true);
+        StartBlur(false);
+        EnableAllCharacters();
+
+        IsAttacking = false;
     }
 
     Transform GetMoveTransformForAlly(int allyIndex, Transform fallback)
@@ -259,16 +407,13 @@ public class AttackCameraController : MonoBehaviour
             if (e) e.SetActive(true);
     }
 
-    void BeginAttackSprites(int allyIndex, int enemyIndex, Transform attacker, Transform target, Transform attackerMove, Transform targetMove)
+    void BeginAttackSprites(int allyIndex, int enemyIndex)
     {
         GameObject allyAttack = (allyIndex >= 0 && allyIndex < allyAttackSprites.Count) ? allyAttackSprites[allyIndex] : null;
         GameObject enemyHit = (enemyIndex >= 0 && enemyIndex < enemyHitSprites.Count) ? enemyHitSprites[enemyIndex] : null;
 
         if (allyAttack)
         {
-            if (allyAttack != attacker.gameObject)
-                allyAttack.transform.localPosition = attacker.localPosition;
-
             if (allyIndex >= 0 && allyIndex < allyIdleSprites.Count && allyIdleSprites[allyIndex] && allyIdleSprites[allyIndex] != allies[allyIndex])
                 allyIdleSprites[allyIndex].SetActive(false);
 
@@ -277,9 +422,6 @@ public class AttackCameraController : MonoBehaviour
 
         if (enemyHit)
         {
-            if (enemyHit != target.gameObject)
-                enemyHit.transform.localPosition = target.localPosition;
-
             if (enemyIndex >= 0 && enemyIndex < enemyIdleSprites.Count && enemyIdleSprites[enemyIndex] && enemyIdleSprites[enemyIndex] != enemies[enemyIndex])
                 enemyIdleSprites[enemyIndex].SetActive(false);
 
@@ -311,6 +453,24 @@ public class AttackCameraController : MonoBehaviour
         if (fadeRoutine != null)
             StopCoroutine(fadeRoutine);
 
+        for (int i = 0; i < groupFadeRoutines.Count; i++)
+        {
+            if (groupFadeRoutines[i] != null)
+                StopCoroutine(groupFadeRoutines[i]);
+        }
+        groupFadeRoutines.Clear();
+
+        for (int i = 0; i < fadeTargets.Count; i++)
+        {
+            var f = fadeTargets[i];
+            if (f.group)
+            {
+                float from = GetGroupAlpha(f.group);
+                float to = restore ? f.originalAlpha : fadedAlpha;
+                groupFadeRoutines.Add(StartCoroutine(f.group.Fade(from, to, fadeTime)));
+            }
+        }
+
         fadeRoutine = StartCoroutine(FadeRoutine(restore));
     }
 
@@ -324,6 +484,8 @@ public class AttackCameraController : MonoBehaviour
 
             foreach (var f in fadeTargets)
             {
+                if (f.group) continue;
+
                 float target = restore ? f.originalAlpha : fadedAlpha;
 
                 if (f.canvas)
@@ -341,6 +503,8 @@ public class AttackCameraController : MonoBehaviour
 
         foreach (var f in fadeTargets)
         {
+            if (f.group) continue;
+
             float a = restore ? f.originalAlpha : fadedAlpha;
 
             if (f.canvas)
@@ -389,7 +553,9 @@ public class AttackCameraController : MonoBehaviour
         Transform target,
         Vector3 targetTargetPos,
         float targetFOV,
-        float time
+        float time,
+        bool useOrbit,
+        Transform orbitCenter
     )
     {
         float t = 0f;
@@ -403,10 +569,33 @@ public class AttackCameraController : MonoBehaviour
         while (t < 1f)
         {
             t += Time.deltaTime / time;
-            float e = EaseOutCubic(t);
+            float u = Mathf.Clamp01(t);
+            float e = EaseOutCubic(u);
 
-            transform.localPosition = Vector3.Lerp(camStartPos, camTargetPos, e);
-            transform.localRotation = Quaternion.Lerp(camStartRot, camTargetRot, e);
+            Vector3 camPos = Vector3.Lerp(camStartPos, camTargetPos, e);
+            Quaternion camRot = Quaternion.Lerp(camStartRot, camTargetRot, e);
+
+            if (useOrbit && orbitCenter)
+            {
+                float s = Mathf.Sin(u * Mathf.PI);
+
+                Vector3 orbitOffset = (Vector3.right * orbitSideX + Vector3.forward * orbitForwardZ) * s;
+
+                transform.localPosition = camPos;
+                Vector3 camWorld = transform.position + transform.TransformDirection(orbitOffset);
+
+                Vector3 toCenter = orbitCenter.position - camWorld;
+                float desiredYaw = Mathf.Atan2(toCenter.x, toCenter.z) * Mathf.Rad2Deg;
+                Quaternion lookYaw = Quaternion.Euler(0f, desiredYaw, 0f);
+
+                transform.position = camWorld;
+                transform.localRotation = Quaternion.Lerp(camRot, lookYaw, Mathf.Clamp01(orbitLookStrength));
+            }
+            else
+            {
+                transform.localPosition = camPos;
+                transform.localRotation = camRot;
+            }
 
             cam.fieldOfView = Mathf.MoveTowards(
                 cam.fieldOfView,
